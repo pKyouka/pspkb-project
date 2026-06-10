@@ -1,4 +1,8 @@
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    @php
+        $isActivity = $isActivity ?? false;
+        $contentLabel = $isActivity ? 'Aktivitas' : 'Berita / Artikel';
+    @endphp
     <div class="lg:col-span-2 space-y-4">
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Judul *</label>
@@ -28,6 +32,7 @@
                 <div id="post-content-editor" class="content-editor min-h-[460px]"></div>
             </div>
         </div>
+
     </div>
     <div class="space-y-4">
         @php
@@ -40,7 +45,7 @@
             <div class="mb-3 flex items-center justify-between gap-3">
                 <div>
                     <label class="block text-sm font-bold text-gray-800">Status *</label>
-                    <p class="mt-0.5 text-xs" :class="status === 'published' ? 'text-emerald-700' : 'text-amber-700'" x-text="status === 'published' ? 'Berita tampil di website publik.' : 'Masih draft, aman untuk diedit dulu.'"></p>
+                    <p class="mt-0.5 text-xs" :class="status === 'published' ? 'text-emerald-700' : 'text-amber-700'" x-text="status === 'published' ? 'Konten tampil di website publik.' : 'Masih draft, aman untuk diedit dulu.'"></p>
                 </div>
                 <span class="rounded-full px-3 py-1 text-xs font-extrabold uppercase tracking-wide" :class="status === 'published' ? 'bg-emerald-600 text-white' : 'bg-amber-500 text-white'" x-text="status"></span>
             </div>
@@ -55,15 +60,23 @@
                 <span class="grid h-9 w-9 place-items-center rounded-xl bg-sky-500 text-white">🏷️</span>
                 <div>
                     <label class="block text-sm font-bold text-gray-800">Kategori</label>
-                    <p class="text-xs text-sky-700">Bantu pengunjung mengenali jenis berita.</p>
+                    <p class="text-xs text-sky-700">{{ $isActivity ? 'Aktivitas otomatis tampil di halaman Aktivitas/Kegiatan.' : 'Pilih Berita atau Artikel sesuai jenis konten.' }}</p>
                 </div>
             </div>
-            <select name="category_id" class="w-full border rounded-lg px-3 py-2">
-                <option value="">-- Pilih Kategori --</option>
-                @foreach($categories as $cat)
-                    <option value="{{ $cat->id }}" {{ $selectedCategoryId == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
-                @endforeach
-            </select>
+            @if($isActivity)
+                <input type="hidden" name="category_id" value="{{ $activityCategory->id }}">
+                <div class="flex items-center justify-between rounded-xl border border-sky-200 bg-white px-4 py-3">
+                    <span class="text-sm font-bold text-sky-900">{{ $activityCategory->name }}</span>
+                    <span class="rounded-full bg-sky-100 px-3 py-1 text-xs font-bold text-sky-700">Otomatis</span>
+                </div>
+            @else
+                <select name="category_id" class="w-full border rounded-lg px-3 py-2">
+                    <option value="">-- Pilih Kategori --</option>
+                    @foreach($categories as $cat)
+                        <option value="{{ $cat->id }}" {{ $selectedCategoryId == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
+                    @endforeach
+                </select>
+            @endif
         </div>
 
         <div class="rounded-2xl border border-violet-200 bg-violet-50/90 p-4 shadow-sm">
@@ -82,7 +95,7 @@
                 <span class="grid h-9 w-9 place-items-center rounded-xl bg-indigo-500 text-white">🖼️</span>
                 <div>
                     <label class="block text-sm font-bold text-gray-800">Thumbnail</label>
-                    <p class="text-xs text-indigo-700">Gambar utama untuk kartu berita.</p>
+                    <p class="text-xs text-indigo-700">Gambar utama untuk kartu {{ strtolower($contentLabel) }}.</p>
                 </div>
             </div>
             <div class="rounded-2xl border border-indigo-200 bg-white p-3 shadow-sm">

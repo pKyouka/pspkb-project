@@ -1,57 +1,102 @@
 @extends('layouts.frontend')
 
-@section('title', $post->title)
-@section('description', $post->meta_description ?? $post->excerpt)
+@section('title', $post->meta_title ?: $post->title)
+@section('description', $post->meta_description ?: $post->excerpt)
 
 @section('content')
+@php
+    $isActivity = $post->category?->slug === 'kegiatan';
+    $indexRoute = $isActivity ? route('activities.index') : route('posts.index');
+    $indexLabel = $isActivity ? __('frontend.nav.activities') : __('frontend.nav.news');
+@endphp
+
 <article>
-    <section class="bg-gradient-to-br from-emerald-900 via-emerald-700 to-purple-800 py-14 text-white">
-        <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-            <nav class="text-sm font-semibold text-emerald-50/90">
-                <a href="{{ route('home') }}" class="hover:text-white">Beranda</a>
-                <span class="mx-2">/</span>
-                <a href="{{ route('posts.index') }}" class="hover:text-white">Berita</a>
+    <section class="pspkb-page-hero relative flex overflow-hidden bg-[#f1f2ef]">
+        <div class="pspkb-hero-glow" aria-hidden="true"></div>
+        <div class="pspkb-ribbons" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="pspkb-grain" aria-hidden="true"></div>
+
+        <div class="relative z-10 mx-auto flex w-full max-w-[1440px] flex-col justify-end px-5 pb-14 pt-32 sm:px-8 sm:pb-16 lg:px-12 lg:pb-20">
+            <nav class="mb-7 flex items-center gap-2 text-xs font-medium text-slate-500">
+                <a href="{{ route('home') }}" class="transition hover:text-emerald-700">{{ __('frontend.common.home') }}</a>
+                <span>/</span>
+                <a href="{{ $indexRoute }}" class="transition hover:text-emerald-700">{{ $indexLabel }}</a>
             </nav>
 
-            <div class="mt-8 flex flex-wrap items-center gap-3 text-sm">
+            <div class="flex flex-wrap items-center gap-3">
                 @if($post->category)
-                    <span class="rounded-full bg-white px-4 py-2 font-black text-emerald-800">{{ $post->category->name }}</span>
+                    <span class="rounded-full bg-slate-950 px-4 py-2 text-xs font-semibold text-white">{{ $post->category->name }}</span>
                 @endif
-                <span class="rounded-full bg-white/15 px-4 py-2 font-bold ring-1 ring-white/20">{{ $post->published_at?->format('d M Y') }}</span>
-                @if($post->creator)
-                    <span class="rounded-full bg-white/15 px-4 py-2 font-bold ring-1 ring-white/20">Oleh {{ $post->creator->name }}</span>
-                @endif
+                <span class="rounded-full border border-slate-300 bg-white/40 px-4 py-2 text-xs font-medium text-slate-700 backdrop-blur">{{ $post->published_at?->translatedFormat('d F Y') }}</span>
             </div>
 
-            <h1 class="mt-6 text-4xl font-black leading-tight tracking-tight md:text-5xl">{{ $post->title }}</h1>
+            <h1 class="mt-7 max-w-6xl text-[clamp(2.5rem,6vw,5rem)] font-medium leading-[1] tracking-[-0.05em] text-slate-950">{{ $post->title }}</h1>
             @if($post->excerpt)
-                <p class="mt-5 max-w-3xl text-lg leading-8 text-emerald-50">{{ $post->excerpt }}</p>
+                <p class="mt-7 max-w-3xl text-base leading-7 text-slate-600 sm:text-lg">{{ $post->excerpt }}</p>
             @endif
         </div>
     </section>
 
-    <section class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
-        @if($post->thumbnail)
-            <img src="{{ asset('storage/' . $post->thumbnail) }}" class="mb-10 h-72 w-full rounded-[2rem] object-cover shadow-xl md:h-[28rem]" alt="{{ $post->title }}">
-        @endif
+    <section class="bg-white py-14 sm:py-20 lg:py-24">
+        <div class="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
+            @if($post->thumbnail)
+                <img src="{{ asset('storage/' . $post->thumbnail) }}" class="aspect-[16/8] w-full rounded-2xl object-cover" alt="{{ $post->title }}">
+            @else
+                <div class="pspkb-news-placeholder aspect-[16/7] w-full rounded-2xl"></div>
+            @endif
 
-        @if($post->tags->count())
-            <div class="mb-8 flex flex-wrap gap-2">
-                @foreach($post->tags as $tag)
-                    <span class="rounded-full bg-emerald-50 px-4 py-2 text-sm font-bold text-emerald-700 ring-1 ring-emerald-100">#{{ $tag->name }}</span>
-                @endforeach
+            <div class="mt-14 grid gap-10 lg:mt-20 lg:grid-cols-[240px_1fr] lg:gap-20">
+                <aside class="lg:sticky lg:top-28 lg:self-start">
+                    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700">{{ __('frontend.common.information') }}</p>
+                    <dl class="mt-5 divide-y divide-slate-200 text-sm">
+                        <div class="py-4 first:pt-0">
+                            <dt class="text-slate-400">{{ __('frontend.common.category') }}</dt>
+                            <dd class="mt-1 font-medium text-slate-900">{{ $post->category?->name ?? __('frontend.posts.default_category') }}</dd>
+                        </div>
+                        <div class="py-4">
+                            <dt class="text-slate-400">{{ __('frontend.common.published') }}</dt>
+                            <dd class="mt-1 font-medium text-slate-900">{{ $post->published_at?->translatedFormat('d F Y') }}</dd>
+                        </div>
+                        @if($post->creator)
+                            <div class="py-4">
+                                <dt class="text-slate-400">{{ __('frontend.common.author') }}</dt>
+                                <dd class="mt-1 font-medium text-slate-900">{{ $post->creator->name }}</dd>
+                            </div>
+                        @endif
+                    </dl>
+
+                    @if($post->tags->count())
+                        <div class="mt-6 flex flex-wrap gap-2">
+                            @foreach($post->tags as $tag)
+                                <span class="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600">#{{ $tag->name }}</span>
+                            @endforeach
+                        </div>
+                    @endif
+                </aside>
+
+                <div>
+                    <div class="pspkb-prose">
+                        {!! $post->content !!}
+                    </div>
+
+                    <div class="mt-14 flex flex-col gap-3 border-t border-slate-200 pt-8 sm:flex-row sm:justify-between">
+                        <a href="{{ $indexRoute }}" class="group inline-flex items-center gap-3 text-sm font-semibold text-slate-900">
+                            <span class="grid h-9 w-9 place-items-center rounded-full border border-slate-300 transition group-hover:bg-slate-950 group-hover:text-white">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="m15 18-6-6 6-6"/></svg>
+                            </span>
+                            {{ __('frontend.common.back_to', ['page' => $indexLabel]) }}
+                        </a>
+                        <a href="{{ route('contact') }}" class="group inline-flex items-center gap-3 text-sm font-semibold text-emerald-700">
+                            {{ __('frontend.common.contact_uld') }}
+                            <span class="grid h-9 w-9 place-items-center rounded-full bg-emerald-700 text-white">
+                                <svg class="h-4 w-4 -rotate-45 transition-transform duration-300 group-hover:rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M5 12h14m-6-6 6 6-6 6"/></svg>
+                            </span>
+                        </a>
+                    </div>
+                </div>
             </div>
-        @endif
-
-        <div class="rounded-[2rem] bg-white p-6 shadow-sm ring-1 ring-slate-200 md:p-10">
-            <div class="prose prose-lg max-w-none prose-headings:font-black prose-headings:text-slate-950 prose-a:text-emerald-700 prose-img:rounded-2xl">
-                {!! $post->content !!}
-            </div>
-        </div>
-
-        <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:justify-between">
-            <a href="{{ route('posts.index') }}" class="inline-flex items-center justify-center rounded-full bg-slate-900 px-6 py-3 text-sm font-black text-white transition hover:bg-slate-800">← Kembali ke Berita</a>
-            <a href="{{ route('contact') }}" class="inline-flex items-center justify-center rounded-full bg-emerald-600 px-6 py-3 text-sm font-black text-white transition hover:bg-emerald-700">Hubungi Kami</a>
         </div>
     </section>
 </article>

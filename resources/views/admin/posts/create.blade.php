@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 
-@section('title', 'Tambah Berita')
+@section('title', 'Tambah Berita/Artikel')
 
 @section('header')
-    <h2 class="text-xl font-semibold text-gray-800">Tambah Berita</h2>
+    <h2 class="text-xl font-semibold text-gray-800">Tambah Berita/Artikel</h2>
 @endsection
 
 @section('content')

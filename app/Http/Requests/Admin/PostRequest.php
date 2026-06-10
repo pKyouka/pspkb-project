@@ -36,7 +36,7 @@ class PostRequest extends FormRequest
 
     public function rules(): array
     {
-        $postId = $this->route('post')?->id;
+        $postId = $this->route('post')?->id ?? $this->route('activity')?->id;
 
         return [
             'category_id' => 'nullable|exists:categories,id',

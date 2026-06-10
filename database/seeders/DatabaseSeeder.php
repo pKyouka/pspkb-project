@@ -50,10 +50,9 @@ class DatabaseSeeder extends Seeder
 
         // Create Categories
         $categories = [
-            'Pengumuman' => 'Pengumuman resmi',
-            'Kegiatan' => 'Berita kegiatan',
-            'Artikel' => 'Artikel dan tulisan',
-            'Info Terkini' => 'Informasi terkini',
+            'Berita' => 'Berita dan informasi resmi Unit Layanan Disabilitas.',
+            'Artikel' => 'Artikel dan wawasan tentang disabilitas serta pendidikan inklusif.',
+            'Kegiatan' => 'Aktivitas, program, pelatihan, dan kegiatan Unit Layanan Disabilitas.',
         ];
         foreach ($categories as $name => $desc) {
             Category::firstOrCreate(['name' => $name], ['description' => $desc]);
@@ -67,14 +66,17 @@ class DatabaseSeeder extends Seeder
 
         // Create Settings
         $settings = [
-            'website_name' => 'PSPKB',
-            'website_description' => 'Website Resmi PSPKB - Pusat Studi dan Pengembangan Keilmuan Berkelanjutan',
-            'contact_email' => 'info@pspkb.id',
-            'contact_phone' => '021-12345678',
-            'contact_address' => 'Jl. Contoh No. 123, Jakarta, Indonesia',
-            'seo_meta_title' => 'PSPKB - Pusat Studi dan Pengembangan Keilmuan Berkelanjutan',
-            'seo_meta_description' => 'Website resmi PSPKB yang menyediakan informasi terkini seputar kegiatan, pengumuman, dan artikel.',
-            'seo_keywords' => 'pspkb, pusat studi, pengembangan, keilmuan, berkelanjutan',
+            'website_name' => 'Unit Layanan Disabilitas',
+            'website_description' => 'Mewujudkan kampus inklusif, setara, aksesibel, dan berkemajuan.',
+            'contact_email' => 'uld@unisayogya.ac.id',
+            'contact_phone' => '',
+            'contact_address' => 'Universitas Aisyiyah Yogyakarta',
+            'contact_heading' => 'Kami siap membantu kebutuhan akses Anda.',
+            'contact_description' => 'Sampaikan kebutuhan layanan, pertanyaan, atau gagasan kolaborasi kepada Unit Layanan Disabilitas.',
+            'contact_hours' => 'Senin-Jumat, 08.00-16.00 WIB',
+            'seo_meta_title' => 'Unit Layanan Disabilitas - Universitas Aisyiyah Yogyakarta',
+            'seo_meta_description' => 'Website resmi Unit Layanan Disabilitas Universitas Aisyiyah Yogyakarta.',
+            'seo_keywords' => 'uld, disabilitas, kampus inklusif, universitas aisyiyah yogyakarta',
         ];
         foreach ($settings as $key => $value) {
             Setting::firstOrCreate(['setting_key' => $key], ['setting_value' => $value]);
@@ -85,36 +87,40 @@ class DatabaseSeeder extends Seeder
             ['location' => 'header'],
             ['name' => 'Menu Utama']
         );
-        MenuItem::firstOrCreate(['menu_id' => $headerMenu->id, 'title' => 'Tentang Kami', 'url' => '/tentang'], ['order_number' => 1]);
-        MenuItem::firstOrCreate(['menu_id' => $headerMenu->id, 'title' => 'Visi & Misi', 'url' => '/visi-misi'], ['order_number' => 2]);
-        MenuItem::firstOrCreate(['menu_id' => $headerMenu->id, 'title' => 'Layanan', 'url' => '/layanan'], ['order_number' => 3]);
+        $headerMenu->allItems()->delete();
+        MenuItem::create(['menu_id' => $headerMenu->id, 'title' => 'Profil ULD dan Struktur', 'url' => '/profil-uld-dan-struktur', 'order_number' => 1]);
+        MenuItem::create(['menu_id' => $headerMenu->id, 'title' => 'Berita dan Artikel', 'url' => '/berita', 'order_number' => 2]);
+        MenuItem::create(['menu_id' => $headerMenu->id, 'title' => 'Aktivitas/Kegiatan', 'url' => '/kegiatan', 'order_number' => 3]);
+        MenuItem::create(['menu_id' => $headerMenu->id, 'title' => 'Kontak', 'url' => '/kontak', 'order_number' => 4]);
 
         // Create Footer Menu
         $footerMenu = Menu::firstOrCreate(
             ['location' => 'footer'],
             ['name' => 'Menu Footer']
         );
-        MenuItem::firstOrCreate(['menu_id' => $footerMenu->id, 'title' => 'Beranda', 'url' => '/'], ['order_number' => 1]);
-        MenuItem::firstOrCreate(['menu_id' => $footerMenu->id, 'title' => 'Berita', 'url' => '/berita'], ['order_number' => 2]);
-        MenuItem::firstOrCreate(['menu_id' => $footerMenu->id, 'title' => 'Tentang Kami', 'url' => '/tentang'], ['order_number' => 3]);
+        $footerMenu->allItems()->delete();
+        MenuItem::create(['menu_id' => $footerMenu->id, 'title' => 'Profil ULD dan Struktur', 'url' => '/profil-uld-dan-struktur', 'order_number' => 1]);
+        MenuItem::create(['menu_id' => $footerMenu->id, 'title' => 'Berita dan Artikel', 'url' => '/berita', 'order_number' => 2]);
+        MenuItem::create(['menu_id' => $footerMenu->id, 'title' => 'Aktivitas/Kegiatan', 'url' => '/kegiatan', 'order_number' => 3]);
+        MenuItem::create(['menu_id' => $footerMenu->id, 'title' => 'Kontak', 'url' => '/kontak', 'order_number' => 4]);
 
         // Create a banner
         \App\Models\Banner::firstOrCreate(
-            ['title' => 'Selamat Datang di PSPKB'],
+            ['title' => 'Unit Layanan Disabilitas'],
             [
-                'description' => 'Pusat Studi dan Pengembangan Keilmuan Berkelanjutan',
+                'description' => 'Mewujudkan Kampus Inklusif, Setara, dan Berkemajuan',
                 'button_text' => 'Selengkapnya',
-                'button_url' => '/tentang',
+                'button_url' => '/profil-uld-dan-struktur',
                 'is_active' => true,
             ]
         );
 
         // Create sample pages
         \App\Models\Page::firstOrCreate(
-            ['slug' => 'tentang'],
+            ['slug' => 'profil-uld-dan-struktur'],
             [
-                'title' => 'Tentang Kami',
-                'content' => '<p>PSPKB adalah Pusat Studi dan Pengembangan Keilmuan Berkelanjutan yang berdedikasi untuk memajukan pendidikan dan penelitian di Indonesia.</p><p>Kami berkomitmen untuk menjadi pusat keunggulan dalam pengembangan keilmuan yang berkelanjutan dan bermanfaat bagi masyarakat.</p>',
+                'title' => 'Profil ULD dan Struktur',
+                'content' => '<h2>Profil Unit Layanan Disabilitas</h2><p>Unit Layanan Disabilitas Universitas Aisyiyah Yogyakarta merupakan pusat layanan dan pengembangan inklusivitas kampus.</p><h2>Struktur ULD</h2><p>Struktur, nama pengelola, jabatan, foto, dan rincian tugas dapat diperbarui melalui editor halaman pada panel admin.</p>',
                 'status' => 'published',
                 'published_at' => now(),
             ]
@@ -123,14 +129,14 @@ class DatabaseSeeder extends Seeder
         // Create sample post
         $admin = User::where('email', 'admin@pspkb.id')->first();
         if ($admin) {
-            $category = Category::where('name', 'Pengumuman')->first();
+            $category = Category::where('name', 'Berita')->first();
             \App\Models\Post::firstOrCreate(
-                ['slug' => 'selamat-datang'],
+                ['slug' => 'selamat-datang-di-website-uld'],
                 [
                     'category_id' => $category?->id,
-                    'title' => 'Selamat Datang di Website Resmi PSPKB',
-                    'excerpt' => 'Website resmi PSPKB telah diluncurkan untuk memberikan informasi terkini.',
-                    'content' => '<p>Kami dengan bangga mengumumkan peluncuran website resmi PSPKB. Website ini akan menjadi sumber informasi utama mengenai kegiatan, pengumuman, dan artikel yang kami produksi.</p><p>Silakan menjelajahi website ini untuk menemukan informasi yang Anda butuhkan.</p>',
+                    'title' => 'Selamat Datang di Website Unit Layanan Disabilitas',
+                    'excerpt' => 'Website ULD hadir sebagai pusat informasi layanan, kegiatan, dan wawasan kampus inklusif.',
+                    'content' => '<p>Website Unit Layanan Disabilitas hadir untuk memudahkan civitas akademika memperoleh informasi layanan, kegiatan, dan artikel seputar disabilitas serta pendidikan inklusif.</p>',
                     'status' => 'published',
                     'published_at' => now(),
                     'created_by' => $admin->id,

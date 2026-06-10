@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Edit Berita')
+@section('title', 'Edit Berita/Artikel')
 @section('header')
     <h2 class="text-xl font-semibold text-gray-800">Edit: {{ $post->title }}</h2>
 @endsection

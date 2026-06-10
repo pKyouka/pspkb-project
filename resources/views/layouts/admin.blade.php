@@ -9,25 +9,75 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
+        :root {
+            --admin-emerald: #047857;
+            --admin-emerald-dark: #065f46;
+            --admin-ink: #0f172a;
+            --admin-line: #dce5df;
+        }
+
         [x-cloak] { display: none !important; }
 
         body {
             background:
-                radial-gradient(circle at top left, rgba(59, 130, 246, .12), transparent 32rem),
-                radial-gradient(circle at top right, rgba(14, 165, 233, .10), transparent 28rem),
-                #f5f7fb;
+                radial-gradient(circle at top left, rgba(16, 185, 129, .13), transparent 32rem),
+                radial-gradient(circle at top right, rgba(148, 210, 190, .20), transparent 30rem),
+                #f1f3ef;
         }
 
         .admin-shell {
-            color: #0f172a;
-            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: var(--admin-ink);
+            font-family: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         }
 
         .admin-sidebar {
             background:
-                linear-gradient(180deg, rgba(15, 23, 42, .98), rgba(30, 41, 59, .98)),
-                radial-gradient(circle at 30% 0%, rgba(37, 99, 235, .28), transparent 16rem);
-            box-shadow: 18px 0 45px rgba(15, 23, 42, .18);
+                radial-gradient(circle at 25% 0%, rgba(52, 211, 153, .20), transparent 18rem),
+                linear-gradient(165deg, #16251f 0%, #0f172a 72%);
+            box-shadow: 0 24px 65px rgba(15, 23, 42, .20);
+            display: flex;
+            flex-direction: column;
+            isolation: isolate;
+            overflow: hidden;
+            transition: transform .25s ease;
+        }
+
+        .admin-sidebar-scroll {
+            flex: 1 1 auto;
+            min-height: 0;
+            margin: 0 .55rem .75rem 0;
+            overscroll-behavior: contain;
+            scrollbar-color: rgba(148, 163, 184, .42) transparent;
+            scrollbar-width: thin;
+        }
+
+        .admin-sidebar-scroll::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .admin-sidebar-scroll::-webkit-scrollbar-track {
+            margin-block: .75rem;
+            background: transparent;
+        }
+
+        .admin-sidebar-scroll::-webkit-scrollbar-thumb {
+            min-height: 3rem;
+            border-radius: 999px;
+            background: rgba(148, 163, 184, .42);
+        }
+
+        .admin-sidebar-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(52, 211, 153, .72);
+        }
+
+        .admin-sidebar-scroll::-webkit-scrollbar-button,
+        .admin-sidebar-scroll::-webkit-scrollbar-button:single-button,
+        .admin-sidebar-scroll::-webkit-scrollbar-corner {
+            appearance: none;
+            display: block;
+            width: 0;
+            height: 0;
+            background: transparent;
         }
 
         .admin-nav-link {
@@ -52,8 +102,8 @@
 
         .admin-nav-link.is-active {
             color: #fff;
-            background: linear-gradient(135deg, #2563eb, #06b6d4);
-            box-shadow: 0 12px 24px rgba(37, 99, 235, .28);
+            background: linear-gradient(135deg, #059669, #047857);
+            box-shadow: 0 12px 28px rgba(4, 120, 87, .30);
         }
 
         .admin-nav-link svg {
@@ -73,7 +123,7 @@
 
         .admin-card,
         main > .bg-white {
-            border: 1px solid rgba(226, 232, 240, .85) !important;
+            border: 1px solid rgba(220, 229, 223, .95) !important;
             border-radius: 1.35rem !important;
             background: rgba(255, 255, 255, .88) !important;
             box-shadow: 0 18px 45px rgba(15, 23, 42, .07) !important;
@@ -88,7 +138,7 @@
         main input[type="url"],
         main select,
         main textarea {
-            border-color: #dbe3ef !important;
+            border-color: var(--admin-line) !important;
             border-radius: .85rem !important;
             background: #fff !important;
             transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
@@ -98,8 +148,8 @@
         main select:focus,
         main textarea:focus {
             outline: none !important;
-            border-color: #2563eb !important;
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, .12) !important;
+            border-color: #10b981 !important;
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, .13) !important;
         }
 
         main label {
@@ -113,7 +163,7 @@
         }
 
         main thead {
-            background: #f8fafc;
+            background: #f3f7f4;
         }
 
         main tbody tr {
@@ -121,20 +171,20 @@
         }
 
         main tbody tr:hover {
-            background: #f8fbff !important;
+            background: #f7faf8 !important;
         }
 
         .ql-toolbar.ql-snow {
             border-top-left-radius: 1rem;
             border-top-right-radius: 1rem;
-            border-color: #dbe3ef !important;
-            background: linear-gradient(180deg, #ffffff, #f8fafc);
+            border-color: var(--admin-line) !important;
+            background: linear-gradient(180deg, #ffffff, #f3f7f4);
         }
 
         .ql-container.ql-snow {
             border-bottom-left-radius: 1rem;
             border-bottom-right-radius: 1rem;
-            border-color: #dbe3ef !important;
+            border-color: var(--admin-line) !important;
             min-height: 26rem;
             background: #fff;
         }
@@ -149,36 +199,74 @@
         main a[href*="/create"],
         main button[type="submit"] {
             border-radius: .9rem !important;
-            box-shadow: 0 10px 24px rgba(37, 99, 235, .18);
+            box-shadow: 0 10px 24px rgba(4, 120, 87, .18);
         }
 
-        @media (max-width: 1024px) {
-            .admin-sidebar {
-                transform: translateX(-100%);
-            }
-
-            .admin-main {
-                margin-left: 0 !important;
-            }
+        .admin-topbar {
+            border: 1px solid rgba(255, 255, 255, .82);
+            background: rgba(255, 255, 255, .90);
+            box-shadow: 0 14px 38px rgba(15, 23, 42, .08);
+            backdrop-filter: blur(20px);
         }
+
+        .admin-main .bg-blue-600,
+        .admin-main .bg-blue-700,
+        .admin-main .bg-indigo-600,
+        .admin-main .bg-sky-600,
+        .admin-main .bg-cyan-600 { background-color: var(--admin-emerald) !important; }
+
+        .admin-main .hover\:bg-blue-700:hover,
+        .admin-main .hover\:bg-blue-800:hover,
+        .admin-main .hover\:bg-indigo-700:hover,
+        .admin-main .hover\:bg-sky-700:hover { background-color: var(--admin-emerald-dark) !important; }
+
+        .admin-main .bg-blue-50,
+        .admin-main .bg-blue-100,
+        .admin-main .bg-indigo-50,
+        .admin-main .bg-sky-50,
+        .admin-main .bg-cyan-50 { background-color: #ecfdf5 !important; }
+
+        .admin-main .text-blue-600,
+        .admin-main .text-blue-700,
+        .admin-main .text-blue-800,
+        .admin-main .text-indigo-600,
+        .admin-main .text-indigo-700,
+        .admin-main .text-sky-600,
+        .admin-main .text-cyan-600 { color: var(--admin-emerald) !important; }
+
+        .admin-main .border-blue-100,
+        .admin-main .border-blue-200,
+        .admin-main .border-blue-300,
+        .admin-main .border-indigo-100,
+        .admin-main .border-indigo-200,
+        .admin-main .border-sky-200 { border-color: #a7f3d0 !important; }
+
+        .admin-main .focus\:ring-blue-500:focus,
+        .admin-main .focus\:ring-indigo-500:focus { --tw-ring-color: rgba(16, 185, 129, .35) !important; }
     </style>
 </head>
-<body class="admin-shell min-h-screen">
+<body class="admin-shell min-h-screen" x-data="{ sidebarOpen: false }">
     <div class="min-h-screen flex">
-        <aside class="admin-sidebar fixed inset-y-0 left-0 z-40 w-72 overflow-y-auto text-white">
-            <div class="px-5 pb-4 pt-5">
+        <div x-cloak x-show="sidebarOpen" x-transition.opacity class="fixed inset-0 z-40 bg-slate-950/45 backdrop-blur-sm lg:hidden" @click="sidebarOpen = false"></div>
+
+        <aside
+            :class="sidebarOpen ? 'translate-x-0' : '-translate-x-[120%]'"
+            class="admin-sidebar fixed inset-y-3 left-3 z-50 w-64 rounded-[2rem] text-white lg:translate-x-0"
+        >
+            <div class="flex-none px-5 pb-4 pt-5">
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3">
-                    <div class="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-400 text-lg font-black shadow-lg shadow-blue-900/30">
-                        P
+                    <div class="grid h-12 w-12 place-items-center rounded-2xl bg-emerald-500 text-sm font-black tracking-wide shadow-lg shadow-emerald-950/30">
+                        ULD
                     </div>
                     <div>
-                        <h1 class="text-lg font-black tracking-tight">{{ config('app.name', 'PSPKB CMS') }}</h1>
-                        <p class="text-xs font-medium text-slate-400">Admin Panel</p>
+                        <h1 class="text-base font-black tracking-tight">Admin ULD</h1>
+                        <p class="mt-0.5 text-[10px] font-semibold uppercase tracking-[.14em] text-emerald-300">Universitas 'Aisyiyah</p>
                     </div>
                 </a>
             </div>
 
-            <nav class="pb-8">
+            <div class="admin-sidebar-scroll overflow-y-auto">
+                <nav class="pb-8">
                 <a href="{{ route('admin.dashboard') }}" class="admin-nav-link {{ request()->routeIs('admin.dashboard') ? 'is-active' : '' }}">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                     Dashboard
@@ -193,7 +281,12 @@
 
                 <a href="{{ route('admin.posts.index') }}" class="admin-nav-link {{ request()->routeIs('admin.posts.*') ? 'is-active' : '' }}">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
-                    Berita
+                    Berita & Artikel
+                </a>
+
+                <a href="{{ route('admin.activities.index') }}" class="admin-nav-link {{ request()->routeIs('admin.activities.*') ? 'is-active' : '' }}">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3M5 11h14M5 5h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"></path></svg>
+                    Aktivitas/Kegiatan
                 </a>
 
                 <a href="{{ route('admin.categories.index') }}" class="admin-nav-link {{ request()->routeIs('admin.categories.*') ? 'is-active' : '' }}">
@@ -243,15 +336,16 @@
                         Pengaturan
                     </a>
                 @endif
-            </nav>
+                </nav>
+            </div>
         </aside>
 
-        <div class="admin-main flex-1 ml-72">
-            <header class="sticky top-0 z-30 border-b border-white/70 bg-white/80 px-8 py-4 shadow-sm backdrop-blur-xl">
+        <div class="admin-main min-w-0 flex-1 lg:ml-[17.75rem]">
+            <header class="admin-topbar sticky top-3 z-30 mx-3 rounded-full px-4 py-3 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between gap-4">
                     <div>
-                        <p class="text-xs font-bold uppercase tracking-[.22em] text-blue-600">Admin Workspace</p>
-                        <div class="mt-1 text-xl font-black tracking-tight text-slate-900">
+                        <p class="hidden text-[10px] font-bold uppercase tracking-[.22em] text-emerald-700 sm:block">ULD Admin Workspace</p>
+                        <div class="text-base font-black tracking-tight text-slate-900 sm:mt-1 sm:text-xl">
                             @hasSection('header')
                                 @yield('header')
                             @else
@@ -261,17 +355,21 @@
                     </div>
 
                     <div class="flex items-center gap-3">
-                        <a href="{{ route('home') }}" target="_blank" class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:text-blue-700 hover:shadow-md">
-                            <span>🌐</span>
+                        <button type="button" @click="sidebarOpen = true" class="grid h-10 w-10 place-items-center rounded-full border border-slate-200 bg-white text-slate-700 lg:hidden" aria-label="Buka menu admin">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                        </button>
+
+                        <a href="{{ route('home') }}" target="_blank" class="hidden items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-emerald-200 hover:text-emerald-700 hover:shadow-md sm:inline-flex">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 100-18 9 9 0 000 18zm0 0c2.21 0 4-4.03 4-9s-1.79-9-4-9-4 4.03-4 9 1.79 9 4 9zM3.6 9h16.8M3.6 15h16.8"/></svg>
                             Lihat Website
                         </a>
 
                         <div class="relative" x-data="{ open: false }">
-                            <button @click="open = !open" class="inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white py-1.5 pl-2 pr-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:shadow-md">
-                                <span class="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-blue-600 to-cyan-400 text-xs font-black text-white">
+                            <button @click="open = !open" class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white py-1.5 pl-2 pr-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:shadow-md sm:gap-3 sm:pr-3">
+                                <span class="grid h-8 w-8 place-items-center rounded-full bg-emerald-700 text-xs font-black text-white">
                                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                                 </span>
-                                {{ auth()->user()->name }}
+                                <span class="hidden sm:inline">{{ auth()->user()->name }}</span>
                                 <svg class="h-4 w-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </button>
 
@@ -290,7 +388,7 @@
                 </div>
             </header>
 
-            <main class="p-8">
+            <main class="mx-auto max-w-[1600px] p-4 pt-8 sm:p-6 sm:pt-10 lg:p-8 lg:pt-10">
                 @if(session('success'))
                     <div class="mb-5 rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm font-semibold text-emerald-800 shadow-sm">
                         {{ session('success') }}

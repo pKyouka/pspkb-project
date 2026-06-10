@@ -25,6 +25,6 @@ class ContactController extends Controller
         $this->contactMessageService->create($request->validated());
 
         return redirect()->route('contact')
-            ->with('success', 'Pesan berhasil dikirim. Kami akan segera menghubungi Anda.');
+            ->with('success', __('frontend.contact.success'));
     }
 }

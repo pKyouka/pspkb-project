@@ -4,91 +4,128 @@
 ])
 
 @php
-    $siteName = $settings['website_name'] ?? config('app.name', 'PSPKB');
+    $siteName = __('frontend.site_name');
     $logo = $settings['logo'] ?? '';
-    $instagram = $settings['social_instagram'] ?? '';
-    $instagramUrl = $instagram
-        ? (\Illuminate\Support\Str::startsWith($instagram, ['http://', 'https://']) ? $instagram : 'https://instagram.com/' . ltrim($instagram, '@'))
-        : '';
+    $headerPosition = request()->routeIs('home') ? 'fixed' : 'sticky';
+    $navigation = $headerMenu?->items?->map(fn ($item) => [
+        'title' => $item->title,
+        'url' => $item->url,
+    ])->values() ?? collect();
 
-    $navBase = 'inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-200';
-    $navIdle = 'text-slate-700 hover:bg-emerald-50 hover:text-emerald-700';
-    $navActive = 'bg-emerald-600 text-white shadow-sm shadow-emerald-200';
+    if ($navigation->isEmpty()) {
+        $navigation = collect([
+            ['title' => __('frontend.nav.profile'), 'url' => route('pages.show', 'profil-uld-dan-struktur')],
+            ['title' => __('frontend.nav.news'), 'url' => route('posts.index')],
+            ['title' => __('frontend.nav.activities'), 'url' => route('activities.index')],
+            ['title' => __('frontend.nav.contact'), 'url' => route('contact')],
+        ]);
+    }
 
-    $mobileBase = 'block rounded-2xl px-4 py-3 text-sm font-semibold transition-colors duration-200';
-    $mobileIdle = 'text-slate-700 hover:bg-emerald-50 hover:text-emerald-700';
-    $mobileActive = 'bg-emerald-600 text-white';
-
-    $menuIsActive = function ($url) {
+    $isActive = function (string $url): bool {
         $path = ltrim(parse_url($url, PHP_URL_PATH) ?: $url, '/');
 
-        return request()->fullUrlIs(url($url))
-            || request()->url() === url($url)
+        return request()->url() === url($url)
             || ($path !== '' && request()->is($path, $path . '/*'));
     };
 @endphp
 
-<header x-data="{ open: false }" class="sticky top-0 z-50 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur">
-    <div class="mx-auto flex min-h-20 max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8">
+<header x-data="{ open: false }" class="{{ $headerPosition }} inset-x-0 top-0 z-50 p-2 sm:p-3">
+    <div class="mx-auto flex max-w-[1440px] items-center justify-between rounded-full border border-white/70 bg-white/90 p-[5px] shadow-[0_8px_35px_rgba(15,23,42,.08)] backdrop-blur-xl">
         <a href="{{ route('home') }}" class="flex min-w-0 items-center gap-3">
-            <span class="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-emerald-600 text-sm font-black text-white shadow-sm">
+            <span class="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-full bg-slate-950 text-[10px] font-bold text-white">
                 @if($logo)
-                    <img src="{{ asset('storage/' . $logo) }}" alt="{{ $siteName }}" class="h-full w-full object-contain bg-white p-1.5">
+                    <img src="{{ asset('storage/' . $logo) }}" alt="{{ $siteName }}" class="h-full w-full bg-white object-contain p-1">
                 @else
-                    UN
+                    ULD
                 @endif
             </span>
-            <span class="min-w-0">
-                <span class="block truncate text-lg font-black leading-tight tracking-tight text-slate-950">{{ $siteName }}</span>
-                <span class="block text-xs font-bold uppercase tracking-[0.2em] text-emerald-700">Aisyiyah Yogyakarta</span>
+            <span class="hidden min-w-0 sm:block">
+                <span class="block truncate text-[15px] font-semibold leading-none tracking-tight text-slate-950">{{ $siteName }}</span>
+                <span class="mt-1 block text-[9px] font-semibold uppercase tracking-[0.2em] text-emerald-700">{{ __('frontend.university') }}</span>
             </span>
         </a>
 
-        <nav class="hidden items-center gap-1 lg:flex">
-            <a href="{{ route('home') }}" class="{{ $navBase }} {{ request()->routeIs('home') ? $navActive : $navIdle }}">Beranda</a>
-            <a href="{{ route('posts.index') }}" class="{{ $navBase }} {{ request()->routeIs('posts.*') ? $navActive : $navIdle }}">Berita</a>
-            <a href="{{ route('contact') }}" class="{{ $navBase }} {{ request()->routeIs('contact') ? $navActive : $navIdle }}">Kontak</a>
-
-            @if($headerMenu)
-                @foreach($headerMenu->items as $item)
-                    <a href="{{ $item->url }}" class="{{ $navBase }} {{ $menuIsActive($item->url) ? $navActive : $navIdle }}">{{ $item->title }}</a>
-                @endforeach
-            @endif
+        <nav class="hidden items-center gap-1 md:flex">
+            @foreach($navigation as $item)
+                <a href="{{ $item['url'] }}" class="rounded-full px-3.5 py-2 text-[13px] font-medium transition-colors duration-300 {{ $isActive($item['url']) ? 'bg-emerald-700 text-white' : 'text-slate-800 hover:bg-emerald-50 hover:text-emerald-700' }}">
+                    {{ $item['title'] }}
+                </a>
+            @endforeach
         </nav>
 
-        <div class="hidden items-center gap-3 lg:flex">
-            <form action="{{ route('search') }}" method="GET" class="flex overflow-hidden rounded-full border border-slate-200 bg-slate-50 transition focus-within:border-emerald-500 focus-within:bg-white">
-                <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari berita..." class="w-48 border-0 bg-transparent px-4 py-2.5 text-sm outline-none focus:ring-0">
-                <button type="submit" class="bg-emerald-600 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-emerald-700">Cari</button>
-            </form>
+        <div class="hidden items-center gap-2 md:flex">
+            <div class="google-language-switcher flex h-10 items-center rounded-full border border-slate-200 bg-white/70 p-1 text-[11px] font-bold shadow-sm" aria-label="Language">
+                <button type="button" data-google-lang="id" onclick="window.setGoogleLanguage('id')" class="google-lang-button grid h-8 min-w-8 place-items-center rounded-full bg-slate-950 px-2 text-white transition">ID</button>
+                <button type="button" data-google-lang="en" onclick="window.setGoogleLanguage('en')" class="google-lang-button grid h-8 min-w-8 place-items-center rounded-full px-2 text-slate-500 transition hover:text-emerald-700">EN</button>
+            </div>
 
-            @if($instagramUrl)
-                <a href="{{ $instagramUrl }}" target="_blank" class="rounded-full border border-purple-200 px-4 py-2.5 text-sm font-bold text-purple-700 transition hover:bg-purple-700 hover:text-white">Instagram</a>
-            @endif
+            <form
+            action="{{ route('search') }}"
+            method="GET"
+            x-data="{ searchOpen: {{ request()->routeIs('search') || request()->filled('q') ? 'true' : 'false' }} }"
+            @submit="if (!searchOpen) { $event.preventDefault(); searchOpen = true; $nextTick(() => $refs.searchInput.focus()) }"
+            @click.outside="if (!$refs.searchInput.value) searchOpen = false"
+            :class="searchOpen ? 'w-72 border-emerald-200 bg-white' : 'w-10 border-slate-200 bg-transparent'"
+            class="hidden h-10 items-center overflow-hidden rounded-full border transition-[width,background-color,border-color] duration-500 ease-[cubic-bezier(.25,.1,.25,1)] md:flex"
+            role="search"
+        >
+            <input
+                x-ref="searchInput"
+                x-show="searchOpen"
+                x-transition.opacity
+                type="search"
+                name="q"
+                value="{{ request('q') }}"
+                placeholder="{{ __('frontend.search.short_placeholder') }}"
+                autocomplete="off"
+                class="min-w-0 flex-1 border-0 bg-transparent py-2 pl-4 pr-1 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:ring-0"
+                aria-label="{{ __('frontend.search.title') }}"
+            >
+            <button
+                type="submit"
+                @click="if (!searchOpen) { $event.preventDefault(); searchOpen = true; $nextTick(() => $refs.searchInput.focus()) }"
+                class="grid h-10 w-10 shrink-0 place-items-center rounded-full text-slate-600 transition hover:bg-emerald-50 hover:text-emerald-700"
+                aria-label="{{ __('frontend.search.title') }}"
+            >
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke-width="1.8"/><path stroke-linecap="round" stroke-width="1.8" d="m20 20-4-4"/></svg>
+            </button>
+            </form>
         </div>
 
-        <button type="button" class="rounded-2xl border border-slate-200 p-2.5 text-slate-700 transition hover:bg-slate-50 lg:hidden" @click="open = !open" aria-label="Toggle menu">
-            <svg x-show="!open" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" d="M4 7h16M4 12h16M4 17h16"/></svg>
-            <svg x-show="open" x-cloak class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" d="M6 18L18 6M6 6l12 12"/></svg>
+        <button type="button" class="grid h-10 w-10 place-items-center rounded-full bg-slate-950 text-white md:hidden" @click="open = !open" aria-label="Buka menu">
+            <svg x-show="!open" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="2" d="M5 8h14M5 16h14"/></svg>
+            <svg x-show="open" x-cloak class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="2" d="m6 6 12 12M18 6 6 18"/></svg>
         </button>
     </div>
 
-    <div x-show="open" x-cloak x-transition class="border-t border-slate-100 bg-white px-4 pb-5 sm:px-6 lg:hidden">
-        <nav class="mx-auto mt-4 max-w-7xl space-y-1">
-            <a href="{{ route('home') }}" class="{{ $mobileBase }} {{ request()->routeIs('home') ? $mobileActive : $mobileIdle }}">Beranda</a>
-            <a href="{{ route('posts.index') }}" class="{{ $mobileBase }} {{ request()->routeIs('posts.*') ? $mobileActive : $mobileIdle }}">Berita</a>
-            <a href="{{ route('contact') }}" class="{{ $mobileBase }} {{ request()->routeIs('contact') ? $mobileActive : $mobileIdle }}">Kontak</a>
-
-            @if($headerMenu)
-                @foreach($headerMenu->items as $item)
-                    <a href="{{ $item->url }}" class="{{ $mobileBase }} {{ $menuIsActive($item->url) ? $mobileActive : $mobileIdle }}">{{ $item->title }}</a>
-                @endforeach
-            @endif
-        </nav>
-
-        <form action="{{ route('search') }}" method="GET" class="mx-auto mt-4 flex max-w-7xl overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
-            <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari berita..." class="min-w-0 flex-1 border-0 bg-transparent px-4 py-3 text-sm outline-none focus:ring-0">
-            <button type="submit" class="bg-emerald-600 px-5 py-3 text-sm font-bold text-white">Cari</button>
+    <div x-show="open" x-cloak x-transition.opacity class="fixed inset-0 -z-10 bg-slate-950/60 md:hidden" @click="open = false"></div>
+    <div x-show="open" x-cloak x-transition:enter="transition duration-500 ease-[cubic-bezier(.32,.72,0,1)]" x-transition:enter-start="translate-y-full" x-transition:enter-end="translate-y-0" x-transition:leave="transition duration-300" x-transition:leave-start="translate-y-0" x-transition:leave-end="translate-y-full" class="fixed inset-x-3 bottom-3 rounded-3xl bg-white p-6 shadow-2xl md:hidden">
+        <div class="mb-5 flex items-center justify-between gap-4">
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700">{{ __('frontend.nav.label') }}</p>
+            <div class="google-language-switcher flex rounded-full border border-slate-200 bg-slate-50 p-1 text-xs font-bold">
+                <button type="button" data-google-lang="id" onclick="window.setGoogleLanguage('id')" class="google-lang-button rounded-full bg-slate-950 px-3 py-1.5 text-white">ID</button>
+                <button type="button" data-google-lang="en" onclick="window.setGoogleLanguage('en')" class="google-lang-button rounded-full px-3 py-1.5 text-slate-500">EN</button>
+            </div>
+        </div>
+        <form action="{{ route('search') }}" method="GET" class="mb-5 flex h-12 items-center rounded-full border border-slate-200 bg-slate-50 focus-within:border-emerald-300 focus-within:bg-white focus-within:ring-4 focus-within:ring-emerald-50" role="search">
+            <input type="search" name="q" value="{{ request('q') }}" placeholder="{{ __('frontend.search.short_placeholder') }}" autocomplete="off" class="min-w-0 flex-1 border-0 bg-transparent py-3 pl-5 pr-2 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:ring-0" aria-label="{{ __('frontend.search.title') }}">
+            <button type="submit" class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-slate-950 text-white" aria-label="{{ __('frontend.search.title') }}">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke-width="1.8"/><path stroke-linecap="round" stroke-width="1.8" d="m20 20-4-4"/></svg>
+            </button>
         </form>
+        <nav class="space-y-1">
+            @foreach($navigation as $item)
+                <a href="{{ $item['url'] }}" class="flex items-center justify-between border-b border-slate-100 py-3 text-xl font-medium tracking-tight {{ $isActive($item['url']) ? 'text-emerald-700' : 'text-slate-950' }}">
+                    {{ $item['title'] }}
+                    <svg class="h-4 w-4 -rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M5 12h14m-6-6 6 6-6 6"/></svg>
+                </a>
+            @endforeach
+        </nav>
+        <a href="{{ route('home') }}" class="mt-7 flex items-center justify-between rounded-full bg-emerald-700 py-2 pl-5 pr-2 text-sm font-semibold text-white">
+            {{ __('frontend.nav.back_home') }}
+            <span class="grid h-9 w-9 place-items-center rounded-full bg-white text-emerald-800">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 18-6-6 6-6"/></svg>
+            </span>
+        </a>
     </div>
 </header>

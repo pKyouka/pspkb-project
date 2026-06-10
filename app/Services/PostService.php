@@ -23,6 +23,21 @@ class PostService
         return $this->postRepository->getPublishedPaginated($perPage);
     }
 
+    public function getAdminByCategorySlugs(array $slugs, int $perPage = 10)
+    {
+        return $this->postRepository->getAdminByCategorySlugs($slugs, $perPage);
+    }
+
+    public function getAdminExcludingCategorySlugs(array $slugs, int $perPage = 10)
+    {
+        return $this->postRepository->getAdminExcludingCategorySlugs($slugs, $perPage);
+    }
+
+    public function getByCategorySlugs(array $slugs, int $perPage = 10)
+    {
+        return $this->postRepository->getByCategorySlugs($slugs, $perPage);
+    }
+
     public function find(int $id)
     {
         return $this->postRepository->find($id);
@@ -111,6 +126,11 @@ class PostService
     public function getFeatured(int $limit = 5)
     {
         return $this->postRepository->getFeatured($limit);
+    }
+
+    public function getFeaturedByCategorySlugs(array $slugs, int $limit = 5)
+    {
+        return $this->postRepository->getFeaturedByCategorySlugs($slugs, $limit);
     }
 
     public function getByCategory(int $categoryId, int $perPage = 10)

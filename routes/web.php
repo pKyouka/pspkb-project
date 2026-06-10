@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\ActivityController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -28,6 +29,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/kontak', [ContactController::class, 'index'])->name('contact');
 Route::post('/kontak', [ContactController::class, 'store'])->name('contact.store');
 Route::get('/search', [SearchController::class, 'index'])->name('search');
+Route::get('/kegiatan', [FrontendPostController::class, 'activities'])->name('activities.index');
 
 // Posts (must be before catch-all {slug})
 Route::prefix('berita')->group(function () {
@@ -56,6 +58,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('posts', PostController::class);
     Route::post('posts/{post}/publish', [PostController::class, 'publish'])->name('posts.publish');
     Route::post('posts/{post}/unpublish', [PostController::class, 'unpublish'])->name('posts.unpublish');
+
+    // Activities
+    Route::resource('activities', ActivityController::class)->except('show');
+    Route::post('activities/{activity}/publish', [ActivityController::class, 'publish'])->name('activities.publish');
+    Route::post('activities/{activity}/unpublish', [ActivityController::class, 'unpublish'])->name('activities.unpublish');
 
     // Categories
     Route::resource('categories', CategoryController::class)->except('show');

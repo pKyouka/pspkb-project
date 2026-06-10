@@ -27,6 +27,45 @@ class PostRepository extends BaseRepository
         return $this->model->published()->latest('published_at')->paginate($perPage);
     }
 
+    public function getAdminByCategorySlugs(array $slugs, int $perPage = 10): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    {
+        return $this->model
+            ->with('category')
+            ->whereHas('category', function ($query) use ($slugs) {
+                $query->whereIn('slug', $slugs);
+            })
+            ->latest()
+            ->paginate($perPage);
+    }
+
+    public function getAdminExcludingCategorySlugs(array $slugs, int $perPage = 10): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    {
+        return $this->model
+            ->with('category')
+            ->where(function ($query) use ($slugs) {
+                $query->whereNull('category_id')
+                    ->orWhereHas('category', function ($categoryQuery) use ($slugs) {
+                        $categoryQuery->whereNotIn('slug', $slugs);
+                    });
+            })
+            ->latest()
+            ->paginate($perPage);
+    }
+
+    /**
+     * Get published posts from one or more category slugs.
+     */
+    public function getByCategorySlugs(array $slugs, int $perPage = 10): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    {
+        return $this->model->published()
+            ->with(['category', 'creator'])
+            ->whereHas('category', function ($query) use ($slugs) {
+                $query->whereIn('slug', $slugs);
+            })
+            ->latest('published_at')
+            ->paginate($perPage);
+    }
+
     /**
      * Find published post by slug
      */
@@ -67,9 +106,11 @@ class PostRepository extends BaseRepository
      */
     public function search(string $query): \Illuminate\Database\Eloquent\Collection
     {
-        return $this->model->where('title', 'like', "%{$query}%")
-            ->orWhere('excerpt', 'like', "%{$query}%")
-            ->orWhere('content', 'like', "%{$query}%")
+        return $this->model->where(function ($builder) use ($query) {
+            $builder->where('title', 'like', "%{$query}%")
+                ->orWhere('excerpt', 'like', "%{$query}%")
+                ->orWhere('content', 'like', "%{$query}%");
+        })
             ->published()
             ->get();
     }
@@ -81,6 +122,18 @@ class PostRepository extends BaseRepository
     {
         return $this->model->published()
             ->with(['category', 'creator'])
+            ->latest('published_at')
+            ->limit($limit)
+            ->get();
+    }
+
+    public function getFeaturedByCategorySlugs(array $slugs, int $limit = 5): \Illuminate\Database\Eloquent\Collection
+    {
+        return $this->model->published()
+            ->with(['category', 'creator'])
+            ->whereHas('category', function ($query) use ($slugs) {
+                $query->whereIn('slug', $slugs);
+            })
             ->latest('published_at')
             ->limit($limit)
             ->get();

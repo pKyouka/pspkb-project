@@ -17,11 +17,44 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = $this->postService->getPublishedPaginated(9);
+        $posts = $this->postService->getByCategorySlugs(['berita', 'artikel'], 9);
         $categories = $this->categoryService->getAll();
         $settings = $this->settingService->getAll();
+        $pageTitle = __('frontend.posts.news_title');
+        $pageLabel = __('frontend.posts.news_label');
+        $pageDescription = __('frontend.posts.news_description');
+        $emptyMessage = __('frontend.posts.news_empty');
 
-        return view('frontend.posts.index', compact('posts', 'categories', 'settings'));
+        return view('frontend.posts.index', compact(
+            'posts',
+            'categories',
+            'settings',
+            'pageTitle',
+            'pageLabel',
+            'pageDescription',
+            'emptyMessage'
+        ));
+    }
+
+    public function activities()
+    {
+        $posts = $this->postService->getByCategorySlugs(['kegiatan'], 9);
+        $categories = $this->categoryService->getAll();
+        $settings = $this->settingService->getAll();
+        $pageTitle = __('frontend.posts.activity_title');
+        $pageLabel = __('frontend.posts.activity_label');
+        $pageDescription = __('frontend.posts.activity_description');
+        $emptyMessage = __('frontend.posts.activity_empty');
+
+        return view('frontend.posts.index', compact(
+            'posts',
+            'categories',
+            'settings',
+            'pageTitle',
+            'pageLabel',
+            'pageDescription',
+            'emptyMessage'
+        ));
     }
 
     public function show(string $slug)

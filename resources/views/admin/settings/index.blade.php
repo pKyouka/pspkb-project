@@ -135,6 +135,21 @@
                 </div>
 
                 <div class="grid grid-cols-1 gap-5 p-6 lg:grid-cols-3">
+                    <div class="lg:col-span-2">
+                        <label class="{{ $labelClass }}">Judul Halaman Kontak</label>
+                        <input type="text" name="contact_heading" value="{{ old('contact_heading', $settings['contact_heading'] ?? '') }}" class="{{ $inputClass }}" placeholder="Kami siap membantu kebutuhan akses Anda">
+                    </div>
+
+                    <div>
+                        <label class="{{ $labelClass }}">Jam Layanan</label>
+                        <input type="text" name="contact_hours" value="{{ old('contact_hours', $settings['contact_hours'] ?? '') }}" class="{{ $inputClass }}" placeholder="Senin-Jumat, 08.00-16.00 WIB">
+                    </div>
+
+                    <div class="lg:col-span-3">
+                        <label class="{{ $labelClass }}">Pengantar Halaman Kontak</label>
+                        <textarea name="contact_description" rows="3" class="{{ $inputClass }}" placeholder="Teks pengantar yang tampil pada halaman kontak">{{ old('contact_description', $settings['contact_description'] ?? '') }}</textarea>
+                    </div>
+
                     <div>
                         <label class="{{ $labelClass }}">Email</label>
                         <input type="email" name="contact_email" value="{{ old('contact_email', $settings['contact_email'] ?? '') }}" class="{{ $inputClass }}" placeholder="info@domain.id">

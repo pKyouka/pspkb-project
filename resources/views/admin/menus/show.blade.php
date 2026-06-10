@@ -1,46 +1,73 @@
 @extends('layouts.admin')
+
 @section('title', 'Kelola Menu: ' . $menu->name)
+
 @section('content')
-<div class="bg-white rounded-lg shadow p-6">
-    <div class="flex justify-between items-center mb-4">
-        <h2 class="text-lg font-semibold">{{ $menu->name }} <span class="text-sm text-gray-500">({{ $menu->location }})</span></h2>
-        <div class="space-x-2">
-            <a href="{{ route('admin.menus.edit', $menu) }}" class="text-blue-600 hover:underline text-sm">Edit Menu</a>
-            <a href="{{ route('admin.menus.index') }}" class="text-gray-600 hover:underline text-sm">← Kembali</a>
+<div class="space-y-6">
+    <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+        <div>
+            <h2 class="text-2xl font-bold text-slate-900">{{ $menu->name }}</h2>
+            <p class="mt-1 text-sm text-slate-500">Edit judul, alamat, dan urutan menu yang tampil pada {{ $menu->location }} website.</p>
         </div>
+        <a href="{{ route('admin.menus.index') }}" class="text-sm font-semibold text-slate-600 hover:text-blue-700">Kembali ke daftar menu</a>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Existing Items -->
-        <div>
-            <h3 class="font-medium mb-3">Item Menu</h3>
-            @forelse($menu->items as $item)
-                <div class="border rounded-lg p-3 mb-2 flex justify-between items-center">
-                    <div><p class="font-medium text-sm">{{ $item->title }}</p><p class="text-xs text-gray-500">{{ $item->url }}</p></div>
-                    <div class="space-x-1">
-                        <form action="{{ route('admin.menus.items.delete', $item) }}" method="POST" class="inline" onsubmit="return confirm('Hapus?')">@csrf @method('DELETE')<button class="text-red-500 text-xs">✕</button></form>
-                    </div>
+
+    <div class="grid gap-6 xl:grid-cols-[1fr_360px]">
+        <section class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+            <h3 class="font-bold text-slate-900">Item Menu</h3>
+            <p class="mt-1 text-sm text-slate-500">Jika item menuju halaman CMS, perubahan URL akan otomatis memperbarui slug halaman tersebut.</p>
+            <div class="mt-5 space-y-3">
+                @forelse($menu->items as $item)
+                    <form action="{{ route('admin.menus.items.update', $item) }}" method="POST" class="grid items-end gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 md:grid-cols-[1fr_1.4fr_90px_auto]">
+                        @csrf
+                        @method('PUT')
+                        <div>
+                            <label class="mb-1 block text-xs font-bold text-slate-500">Judul</label>
+                            <input type="text" name="title" value="{{ $item->title }}" class="w-full border px-3 py-2 text-sm" required>
+                        </div>
+                        <div>
+                            <label class="mb-1 block text-xs font-bold text-slate-500">URL</label>
+                            <input type="text" name="url" value="{{ $item->url }}" class="w-full border px-3 py-2 text-sm" placeholder="/halaman">
+                        </div>
+                        <div>
+                            <label class="mb-1 block text-xs font-bold text-slate-500">Urutan</label>
+                            <input type="number" name="order_number" value="{{ $item->order_number }}" min="0" class="w-full border px-3 py-2 text-sm">
+                        </div>
+                        <div class="flex gap-2">
+                            <button type="submit" class="rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-blue-700">Simpan</button>
+                            <button type="submit" form="delete-menu-item-{{ $item->id }}" class="rounded-xl bg-red-50 px-3 py-2.5 text-xs font-bold text-red-700 hover:bg-red-100">Hapus</button>
+                        </div>
+                    </form>
+                    <form id="delete-menu-item-{{ $item->id }}" action="{{ route('admin.menus.items.delete', $item) }}" method="POST" onsubmit="return confirm('Hapus item menu ini?')">
+                        @csrf
+                        @method('DELETE')
+                    </form>
+                @empty
+                    <div class="rounded-xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500">Belum ada item menu.</div>
+                @endforelse
+            </div>
+        </section>
+
+        <aside class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+            <h3 class="font-bold text-slate-900">Tambah Item</h3>
+            <p class="mt-1 text-sm leading-6 text-slate-500">Gunakan URL relatif seperti <code>/berita</code> atau <code>/kontak</code>.</p>
+            <form action="{{ route('admin.menus.items.add', $menu) }}" method="POST" class="mt-5 space-y-4">
+                @csrf
+                <div>
+                    <label class="mb-1 block text-xs font-bold text-slate-500">Judul</label>
+                    <input type="text" name="title" class="w-full border px-3 py-2 text-sm" required>
                 </div>
-                @foreach($item->children as $child)
-                    <div class="border rounded-lg p-3 mb-2 ml-6 flex justify-between items-center">
-                        <div><p class="text-sm">{{ $child->title }}</p><p class="text-xs text-gray-500">{{ $child->url }}</p></div>
-                        <form action="{{ route('admin.menus.items.delete', $child) }}" method="POST" class="inline" onsubmit="return confirm('Hapus?')">@csrf @method('DELETE')<button class="text-red-500 text-xs">✕</button></form>
-                    </div>
-                @endforeach
-            @empty
-                <p class="text-gray-500 text-sm">Belum ada item.</p>
-            @endforelse
-        </div>
-        <!-- Add Item Form -->
-        <div>
-            <h3 class="font-medium mb-3">Tambah Item</h3>
-            <form action="{{ route('admin.menus.items.add', $menu) }}" method="POST" class="border rounded-lg p-4 space-y-3">@csrf
-                <div><label class="block text-xs text-gray-500 mb-1">Judul</label><input type="text" name="title" class="w-full border rounded px-3 py-2 text-sm" required></div>
-                <div><label class="block text-xs text-gray-500 mb-1">URL</label><input type="text" name="url" class="w-full border rounded px-3 py-2 text-sm" placeholder="/halaman"></div>
-                <div><label class="block text-xs text-gray-500 mb-1">Parent ID (opsional)</label><input type="number" name="parent_id" class="w-full border rounded px-3 py-2 text-sm" placeholder="Kosongkan jika root"></div>
-                <div><label class="block text-xs text-gray-500 mb-1">Urutan</label><input type="number" name="order_number" value="0" class="w-full border rounded px-3 py-2 text-sm"></div>
-                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700">Tambah</button>
+                <div>
+                    <label class="mb-1 block text-xs font-bold text-slate-500">URL</label>
+                    <input type="text" name="url" class="w-full border px-3 py-2 text-sm" placeholder="/halaman">
+                </div>
+                <div>
+                    <label class="mb-1 block text-xs font-bold text-slate-500">Urutan</label>
+                    <input type="number" name="order_number" value="{{ ($menu->items->max('order_number') ?? 0) + 1 }}" min="0" class="w-full border px-3 py-2 text-sm">
+                </div>
+                <button type="submit" class="w-full rounded-xl bg-blue-600 px-4 py-3 text-sm font-bold text-white hover:bg-blue-700">Tambah Item</button>
             </form>
-        </div>
+        </aside>
     </div>
 </div>
 @endsection

@@ -40,8 +40,10 @@ class PageRepository extends BaseRepository
      */
     public function search(string $query): \Illuminate\Database\Eloquent\Collection
     {
-        return $this->model->where('title', 'like', "%{$query}%")
-            ->orWhere('content', 'like', "%{$query}%")
+        return $this->model->where(function ($builder) use ($query) {
+            $builder->where('title', 'like', "%{$query}%")
+                ->orWhere('content', 'like', "%{$query}%");
+        })
             ->published()
             ->get();
     }

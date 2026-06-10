@@ -21,16 +21,17 @@ class PostController extends Controller
 
     public function index(): View
     {
-        $posts = $this->postService->getAllPaginated(15);
+        $posts = $this->postService->getAdminExcludingCategorySlugs(['kegiatan'], 15);
         $categories = $this->categoryService->getAll();
         return view('admin.posts.index', compact('posts', 'categories'));
     }
 
     public function create(): View
     {
-        $categories = $this->categoryService->getAll();
+        $categories = $this->categoryService->getAll()->reject(fn ($category) => $category->slug === 'kegiatan');
         $tags = $this->tagService->getAll();
-        return view('admin.posts.create', compact('categories', 'tags'));
+        $post = null;
+        return view('admin.posts.create', compact('categories', 'tags', 'post'));
     }
 
     public function store(PostRequest $request): RedirectResponse
@@ -48,14 +49,16 @@ class PostController extends Controller
 
     public function edit(Post $post): View
     {
+        $this->ensureNotActivity($post);
         $post->load('tags');
-        $categories = $this->categoryService->getAll();
+        $categories = $this->categoryService->getAll()->reject(fn ($category) => $category->slug === 'kegiatan');
         $tags = $this->tagService->getAll();
         return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     public function update(PostRequest $request, Post $post): RedirectResponse
     {
+        $this->ensureNotActivity($post);
         $this->postService->update($post->id, $request->validated());
         return redirect()->route('admin.posts.index')
             ->with('success', 'Berita berhasil diperbarui.');
@@ -63,6 +66,7 @@ class PostController extends Controller
 
     public function destroy(Post $post): RedirectResponse
     {
+        $this->ensureNotActivity($post);
         $this->postService->delete($post->id);
         return redirect()->route('admin.posts.index')
             ->with('success', 'Berita berhasil dihapus.');
@@ -70,6 +74,7 @@ class PostController extends Controller
 
     public function publish(Post $post): RedirectResponse
     {
+        $this->ensureNotActivity($post);
         $this->postService->publish($post->id);
         return redirect()->route('admin.posts.index')
             ->with('success', 'Berita berhasil dipublikasikan.');
@@ -77,8 +82,15 @@ class PostController extends Controller
 
     public function unpublish(Post $post): RedirectResponse
     {
+        $this->ensureNotActivity($post);
         $this->postService->unpublish($post->id);
         return redirect()->route('admin.posts.index')
             ->with('success', 'Berita berhasil di-unpublish.');
+    }
+
+    private function ensureNotActivity(Post $post): void
+    {
+        $post->loadMissing('category');
+        abort_if($post->category?->slug === 'kegiatan', 404);
     }
 }

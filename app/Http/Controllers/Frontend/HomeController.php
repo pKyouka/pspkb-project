@@ -22,7 +22,7 @@ class HomeController extends Controller
     public function index()
     {
         $banners = $this->bannerService->getActive()->take(3);
-        $featuredPosts = $this->postService->getFeatured(6);
+        $featuredPosts = $this->postService->getFeaturedByCategorySlugs(['berita', 'artikel'], 6);
         $featuredPages = $this->pageService->getPublishedPaginated(4);
         $settings = $this->settingService->getAll();
         $headerMenu = $this->menuService->findByLocation('header');
