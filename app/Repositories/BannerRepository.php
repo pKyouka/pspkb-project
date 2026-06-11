@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Banner;
+use Illuminate\Database\Eloquent\Collection;
 
 class BannerRepository extends BaseRepository
 {
@@ -14,8 +15,8 @@ class BannerRepository extends BaseRepository
     /**
      * Get active banners
      */
-    public function getActive(): \Illuminate\Database\Eloquent\Collection
+    public function getActive(): Collection
     {
-        return $this->model->active()->get();
+        return $this->model->active()->oldest()->get();
     }
 }

@@ -18,6 +18,7 @@ class BannerController extends Controller
     public function index(): View
     {
         $banners = $this->bannerService->getAllPaginated(10);
+
         return view('admin.banners.index', compact('banners'));
     }
 
@@ -28,9 +29,10 @@ class BannerController extends Controller
 
     public function store(BannerRequest $request): RedirectResponse
     {
-        $this->bannerService->create($request->validated());
+        $this->bannerService->createMany($request->validated());
+
         return redirect()->route('admin.banners.index')
-            ->with('success', 'Banner berhasil dibuat.');
+            ->with('success', 'Gambar banner berhasil ditambahkan.');
     }
 
     public function edit(Banner $banner): View
@@ -41,6 +43,7 @@ class BannerController extends Controller
     public function update(BannerRequest $request, Banner $banner): RedirectResponse
     {
         $this->bannerService->update($banner->id, $request->validated());
+
         return redirect()->route('admin.banners.index')
             ->with('success', 'Banner berhasil diperbarui.');
     }
@@ -48,6 +51,7 @@ class BannerController extends Controller
     public function destroy(Banner $banner): RedirectResponse
     {
         $this->bannerService->delete($banner->id);
+
         return redirect()->route('admin.banners.index')
             ->with('success', 'Banner berhasil dihapus.');
     }

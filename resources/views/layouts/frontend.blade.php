@@ -52,7 +52,7 @@
                             @if($logo)
                                 <img src="{{ asset('storage/' . $logo) }}" alt="{{ $siteName }}" class="h-full w-full object-contain p-1.5">
                             @else
-                                ULD
+                                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2" stroke-width="1.8"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 7.5v6m0 0 4 5m-4-5-4 5m-3-7h14"/></svg>
                             @endif
                         </span>
                         <div>

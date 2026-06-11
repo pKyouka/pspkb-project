@@ -255,11 +255,11 @@
         >
             <div class="flex-none px-5 pb-4 pt-5">
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3">
-                    <div class="grid h-12 w-12 place-items-center rounded-2xl bg-emerald-500 text-sm font-black tracking-wide shadow-lg shadow-emerald-950/30">
-                        ULD
+                    <div class="grid h-12 w-12 place-items-center rounded-2xl bg-emerald-500 shadow-lg shadow-emerald-950/30">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2" stroke-width="1.8"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 7.5v6m0 0 4 5m-4-5-4 5m-3-7h14"/></svg>
                     </div>
                     <div>
-                        <h1 class="text-base font-black tracking-tight">Admin ULD</h1>
+                        <h1 class="max-w-36 text-sm font-black leading-tight tracking-tight">Admin Unit Layanan Disabilitas</h1>
                         <p class="mt-0.5 text-[10px] font-semibold uppercase tracking-[.14em] text-emerald-300">Universitas 'Aisyiyah</p>
                     </div>
                 </a>
@@ -344,7 +344,7 @@
             <header class="admin-topbar sticky top-3 z-30 mx-3 rounded-full px-4 py-3 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between gap-4">
                     <div>
-                        <p class="hidden text-[10px] font-bold uppercase tracking-[.22em] text-emerald-700 sm:block">ULD Admin Workspace</p>
+                        <p class="hidden text-[10px] font-bold uppercase tracking-[.18em] text-emerald-700 sm:block">Ruang Kerja Admin Unit Layanan Disabilitas</p>
                         <div class="text-base font-black tracking-tight text-slate-900 sm:mt-1 sm:text-xl">
                             @hasSection('header')
                                 @yield('header')

@@ -63,6 +63,21 @@
     isolation: isolate;
 }
 
+.pspkb-hero-title {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, .45);
+    text-shadow:
+        0 1px 0 rgba(255, 255, 255, .95),
+        0 0 16px rgba(255, 255, 255, .95),
+        0 4px 28px rgba(255, 255, 255, .9);
+}
+
+.pspkb-hero-copy {
+    text-shadow:
+        0 1px 0 rgba(255, 255, 255, 1),
+        0 0 12px rgba(255, 255, 255, 1),
+        0 3px 20px rgba(255, 255, 255, .95);
+}
+
 .pspkb-page-hero {
     isolation: isolate;
     min-height: clamp(30rem, 68vh, 45rem);
@@ -129,6 +144,81 @@
         linear-gradient(145deg, transparent 0 35%, rgba(255,255,255,.18) 35% 39%, transparent 39% 100%),
         radial-gradient(circle at 72% 28%, rgba(255,255,255,.55), transparent 18%),
         linear-gradient(135deg, #064e3b, #10b981 56%, #d1fae5);
+}
+
+.pspkb-profile-visual {
+    background:
+        radial-gradient(circle at 75% 22%, rgba(255, 255, 255, .26), transparent 18%),
+        repeating-linear-gradient(115deg, transparent 0 52px, rgba(255, 255, 255, .08) 53px 104px),
+        linear-gradient(145deg, #022c22 0%, #047857 58%, #34d399 100%);
+}
+
+.pspkb-profile-visual::before,
+.pspkb-profile-visual::after {
+    content: '';
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, .25);
+    border-radius: 999px;
+}
+
+.pspkb-auth-pattern {
+    background:
+        radial-gradient(circle at 78% 18%, rgba(52, 211, 153, .24), transparent 24%),
+        repeating-linear-gradient(118deg, transparent 0 78px, rgba(255, 255, 255, .035) 79px 156px),
+        linear-gradient(145deg, #022c22 0%, #065f46 55%, #064e3b 100%);
+}
+
+.pspkb-auth-pattern::before,
+.pspkb-auth-pattern::after {
+    content: '';
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: 999px;
+}
+
+.pspkb-auth-pattern::before {
+    width: 34rem;
+    height: 34rem;
+    right: -12rem;
+    top: -10rem;
+}
+
+.pspkb-auth-pattern::after {
+    width: 20rem;
+    height: 20rem;
+    right: 2rem;
+    top: 2rem;
+}
+
+.pspkb-strategic-card::after {
+    content: '';
+    position: absolute;
+    width: 11rem;
+    height: 11rem;
+    right: -5rem;
+    bottom: -6rem;
+    border: 1px solid rgba(5, 150, 105, .16);
+    border-radius: 999px;
+    transition: transform .6s ease, border-color .5s ease;
+}
+
+.pspkb-strategic-card:hover::after {
+    border-color: rgba(255, 255, 255, .22);
+    transform: scale(1.35);
+}
+
+.pspkb-profile-visual::before {
+    width: 22rem;
+    height: 22rem;
+    right: -7rem;
+    top: -5rem;
+}
+
+.pspkb-profile-visual::after {
+    width: 14rem;
+    height: 14rem;
+    right: 3rem;
+    top: 4rem;
 }
 
 .pspkb-news-placeholder {
@@ -240,6 +330,72 @@
     background: #059669;
 }
 
+.pspkb-prose .uld-values {
+    display: block;
+    max-width: 76ch;
+    margin: 1rem 0 3.5rem;
+    padding: 0;
+    counter-reset: uld-value;
+}
+
+.pspkb-prose .uld-values > li {
+    counter-increment: uld-value;
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    column-gap: 1.5rem;
+    align-items: baseline;
+    min-height: auto;
+    padding: 1.5rem 0;
+    border: 0;
+    border-bottom: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #475569;
+}
+
+.pspkb-prose .uld-values > li + li {
+    border-top: 1px solid #e2e8f0;
+}
+
+.pspkb-prose .uld-values > li::before {
+    content: counter(uld-value, decimal-leading-zero);
+    position: static;
+    grid-row: 1;
+    grid-column: 1;
+    display: block;
+    color: #059669;
+    background: transparent;
+    font-size: .75rem;
+    font-weight: 700;
+}
+
+.pspkb-prose .uld-values strong,
+.pspkb-prose .uld-values span {
+    grid-column: 2;
+}
+
+.pspkb-prose .uld-values strong {
+    grid-row: 1;
+    display: inline;
+    margin: 0;
+    color: #0f172a;
+    font-size: 1rem;
+    font-weight: 650;
+}
+
+.pspkb-prose .uld-values span {
+    grid-row: 2;
+    display: block;
+    margin-top: .3rem;
+    color: #475569;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.pspkb-prose .uld-values > li:hover strong {
+    color: #047857;
+}
+
 .pspkb-prose ol > li::before,
 .pspkb-prose ul > li::before {
     position: absolute;
@@ -347,6 +503,16 @@
     .pspkb-prose ol > li,
     .pspkb-prose ul > li {
         padding-left: 2.75rem;
+    }
+
+    .pspkb-prose .uld-values {
+        margin-bottom: 3rem;
+    }
+
+    .pspkb-prose .uld-values > li {
+        grid-template-columns: 2rem minmax(0, 1fr);
+        column-gap: 1rem;
+        padding: 1.25rem 0;
     }
 }
 

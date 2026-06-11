@@ -4,6 +4,10 @@ namespace App\Services;
 
 use App\Repositories\BannerRepository;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class BannerService
 {
@@ -35,10 +39,45 @@ class BannerService
         return $this->bannerRepository->create($data);
     }
 
+    public function createMany(array $data): Collection
+    {
+        $storedImages = [];
+
+        try {
+            return DB::transaction(function () use ($data, &$storedImages) {
+                return collect($data['images'])->map(function (UploadedFile $image) use ($data, &$storedImages) {
+                    $path = $image->store('banners', 'public');
+                    $storedImages[] = $path;
+
+                    return $this->bannerRepository->create([
+                        'title' => Str::of($image->getClientOriginalName())->beforeLast('.')->replace(['-', '_'], ' ')->title(),
+                        'image' => $path,
+                        'is_active' => $data['is_active'] ?? false,
+                    ]);
+                });
+            });
+        } catch (\Throwable $exception) {
+            Storage::disk('public')->delete($storedImages);
+
+            throw $exception;
+        }
+    }
+
     public function update(int $id, array $data)
     {
+        $banner = $this->bannerRepository->find($id);
+
+        if (! $banner) {
+            return false;
+        }
+
         if (isset($data['image']) && $data['image'] instanceof UploadedFile) {
+            $oldImage = $banner->image;
             $data['image'] = $data['image']->store('banners', 'public');
+
+            if ($oldImage) {
+                Storage::disk('public')->delete($oldImage);
+            }
         }
 
         return $this->bannerRepository->update($id, $data);
@@ -46,6 +85,16 @@ class BannerService
 
     public function delete(int $id)
     {
+        $banner = $this->bannerRepository->find($id);
+
+        if (! $banner) {
+            return false;
+        }
+
+        if ($banner->image) {
+            Storage::disk('public')->delete($banner->image);
+        }
+
         return $this->bannerRepository->delete($id);
     }
 

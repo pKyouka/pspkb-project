@@ -21,7 +21,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $banners = $this->bannerService->getActive()->take(3);
+        $banners = $this->bannerService->getActive();
         $featuredPosts = $this->postService->getFeaturedByCategorySlugs(['berita', 'artikel'], 6);
         $featuredPages = $this->pageService->getPublishedPaginated(4);
         $settings = $this->settingService->getAll();

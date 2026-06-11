@@ -27,9 +27,9 @@ return new class extends Migration
             DB::table('pages')->updateOrInsert(
                 ['slug' => 'profil-uld-dan-struktur'],
                 [
-                    'title' => 'Profil ULD dan Struktur',
+                    'title' => 'Profil Unit Layanan Disabilitas dan Struktur',
                     'content' => $this->profileContent(),
-                    'meta_title' => 'Profil ULD dan Struktur',
+                    'meta_title' => 'Profil Unit Layanan Disabilitas dan Struktur',
                     'meta_description' => 'Profil, visi, misi, nilai, peran, dan struktur Unit Layanan Disabilitas Universitas Aisyiyah Yogyakarta.',
                     'status' => 'published',
                     'published_at' => $now,
@@ -51,7 +51,7 @@ return new class extends Migration
             DB::table('menu_items')->where('menu_id', $menuId)->delete();
 
             DB::table('menu_items')->insert([
-                ['menu_id' => $menuId, 'parent_id' => null, 'title' => 'Profil ULD dan Struktur', 'url' => '/profil-uld-dan-struktur', 'order_number' => 1, 'created_at' => $now, 'updated_at' => $now],
+                ['menu_id' => $menuId, 'parent_id' => null, 'title' => 'Profil Unit Layanan Disabilitas dan Struktur', 'url' => '/profil-uld-dan-struktur', 'order_number' => 1, 'created_at' => $now, 'updated_at' => $now],
                 ['menu_id' => $menuId, 'parent_id' => null, 'title' => 'Berita dan Artikel', 'url' => '/berita', 'order_number' => 2, 'created_at' => $now, 'updated_at' => $now],
                 ['menu_id' => $menuId, 'parent_id' => null, 'title' => 'Aktivitas/Kegiatan', 'url' => '/kegiatan', 'order_number' => 3, 'created_at' => $now, 'updated_at' => $now],
                 ['menu_id' => $menuId, 'parent_id' => null, 'title' => 'Kontak', 'url' => '/kontak', 'order_number' => 4, 'created_at' => $now, 'updated_at' => $now],
@@ -93,11 +93,11 @@ return new class extends Migration
     {
         return <<<'HTML'
 <h2>Profil Unit Layanan Disabilitas</h2>
-<p>Unit Layanan Disabilitas (ULD) Universitas &lsquo;Aisyiyah Yogyakarta merupakan pusat layanan dan pengembangan inklusivitas kampus yang berkomitmen untuk memastikan setiap civitas akademika memperoleh hak, akses, kesempatan, dan partisipasi yang setara tanpa diskriminasi.</p>
-<p>ULD hadir sebagai bentuk komitmen Universitas &lsquo;Aisyiyah Yogyakarta dalam mendukung pendidikan tinggi yang inklusif, humanis, berkeadilan, dan berperspektif keberagaman sesuai dengan nilai-nilai Islam berkemajuan serta prinsip Sustainable Development Goals (SDGs), khususnya pada aspek pendidikan berkualitas dan kesetaraan.</p>
-<p>ULD berupaya menciptakan lingkungan akademik yang tidak hanya ramah disabilitas, tetapi juga menghargai keberagaman sebagai kekuatan dalam membangun peradaban yang unggul dan berkemajuan.</p>
+<p>Unit Layanan Disabilitas Universitas &lsquo;Aisyiyah Yogyakarta merupakan pusat layanan dan pengembangan inklusivitas kampus yang berkomitmen untuk memastikan setiap civitas akademika memperoleh hak, akses, kesempatan, dan partisipasi yang setara tanpa diskriminasi.</p>
+<p>Unit Layanan Disabilitas hadir sebagai bentuk komitmen Universitas &lsquo;Aisyiyah Yogyakarta dalam mendukung pendidikan tinggi yang inklusif, humanis, berkeadilan, dan berperspektif keberagaman sesuai dengan nilai-nilai Islam berkemajuan serta prinsip Sustainable Development Goals (SDGs), khususnya pada aspek pendidikan berkualitas dan kesetaraan.</p>
+<p>Unit Layanan Disabilitas berupaya menciptakan lingkungan akademik yang tidak hanya ramah disabilitas, tetapi juga menghargai keberagaman sebagai kekuatan dalam membangun peradaban yang unggul dan berkemajuan.</p>
 
-<h2>Peran Strategis ULD</h2>
+<h2>Peran Strategis Unit Layanan Disabilitas</h2>
 <ol>
 <li>Memberikan layanan pendampingan bagi mahasiswa penyandang disabilitas.</li>
 <li>Mengembangkan sistem pembelajaran yang aksesibel.</li>
@@ -118,17 +118,17 @@ return new class extends Migration
 <li>Mendukung penelitian, pengabdian masyarakat, dan inovasi terkait isu disabilitas dan inklusivitas.</li>
 </ol>
 
-<h2>Nilai-Nilai ULD</h2>
-<ul>
-<li><strong>Inklusif:</strong> menghargai keberagaman dan kesetaraan.</li>
-<li><strong>Humanis:</strong> mengedepankan empati dan penghormatan terhadap martabat manusia.</li>
-<li><strong>Kolaboratif:</strong> membangun sinergi lintas sektor dan komunitas.</li>
-<li><strong>Profesional:</strong> memberikan layanan yang berkualitas dan berkelanjutan.</li>
-<li><strong>Berkemajuan:</strong> adaptif terhadap perkembangan ilmu pengetahuan dan teknologi.</li>
+<h2>Nilai-Nilai Unit Layanan Disabilitas</h2>
+<ul class="uld-values">
+<li><strong>Inklusif</strong><span>Menghargai keberagaman dan kesetaraan.</span></li>
+<li><strong>Humanis</strong><span>Mengedepankan empati dan penghormatan terhadap martabat manusia.</span></li>
+<li><strong>Kolaboratif</strong><span>Membangun sinergi lintas sektor dan komunitas.</span></li>
+<li><strong>Profesional</strong><span>Memberikan layanan yang berkualitas dan berkelanjutan.</span></li>
+<li><strong>Berkemajuan</strong><span>Adaptif terhadap perkembangan ilmu pengetahuan dan teknologi.</span></li>
 </ul>
 
-<h2>Struktur ULD</h2>
-<p>Struktur ULD disusun untuk memastikan koordinasi layanan berjalan efektif melalui unsur pimpinan unit, administrasi, layanan akademik dan pendampingan, aksesibilitas, edukasi dan pelatihan, serta kemitraan dan pengembangan. Nama pengelola, jabatan, foto, dan rincian tugas dapat diperbarui melalui editor halaman ini pada panel admin.</p>
+<h2>Struktur Unit Layanan Disabilitas</h2>
+<p>Struktur Unit Layanan Disabilitas disusun untuk memastikan koordinasi layanan berjalan efektif melalui unsur pimpinan unit, administrasi, layanan akademik dan pendampingan, aksesibilitas, edukasi dan pelatihan, serta kemitraan dan pengembangan. Nama pengelola, jabatan, foto, dan rincian tugas dapat diperbarui melalui editor halaman ini pada panel admin.</p>
 HTML;
     }
 };
