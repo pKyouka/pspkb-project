@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             ['email' => 'admin@pspkb.id'],
             [
                 'name' => 'Super Admin',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('unisayogya2026!'),
                 'role' => 'super_admin',
                 'email_verified_at' => now(),
             ]
@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
             ['email' => 'editor@pspkb.id'],
             [
                 'name' => 'Editor',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('unisayogya2026!'),
                 'role' => 'editor',
                 'email_verified_at' => now(),
             ]
@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
             ['email' => 'author@pspkb.id'],
             [
                 'name' => 'Author',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('unisayogya2026!'),
                 'role' => 'author',
                 'email_verified_at' => now(),
             ]
