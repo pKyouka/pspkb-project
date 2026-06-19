@@ -92,6 +92,8 @@
         </div>
     </footer>
 
+    <x-frontend.pmb-bubble />
+
     <div id="google_translate_element" aria-hidden="true"></div>
     <script>
         window.googleTranslateElementInit = function () {
