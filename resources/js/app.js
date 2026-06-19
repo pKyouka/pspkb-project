@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             .ql-editor img.is-selected {
-                outline: 3px solid #2563eb;
+                outline: 3px solid #00a859;
                 outline-offset: 3px;
             }
 
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 padding: 6px 10px;
                 border: 0;
                 border-radius: 8px;
-                background: #374151;
+                background: #1f3d30;
                 color: #fff;
                 font-size: 12px;
                 font-weight: 600;
@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             .pspkb-image-size-picker button:hover,
             .pspkb-image-size-picker button.is-active {
-                background: #2563eb;
+                background: #00a859;
             }
         `;
 

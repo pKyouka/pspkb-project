@@ -24,7 +24,7 @@
                 @error('images.*')<p class="mt-2 text-sm font-medium text-rose-600">{{ $message }}</p>@enderror
             </div>
             <input type="hidden" name="is_active" value="1">
-            <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-emerald-700 px-6 py-3 text-sm font-bold text-white transition hover:bg-emerald-800">
+            <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-[#00c46a] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#00d976]">
                 Upload Gambar
             </button>
         </form>

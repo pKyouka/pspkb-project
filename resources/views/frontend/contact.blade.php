@@ -63,7 +63,7 @@
                         @error('message') <p class="mt-1 text-xs font-medium text-red-500">{{ $message }}</p>@enderror
                     </div>
                     <div class="sm:col-span-2">
-                        <button type="submit" class="group inline-flex items-center gap-4 rounded-full bg-emerald-700 py-2 pl-6 pr-2 text-sm font-semibold text-white transition hover:bg-emerald-800">
+                        <button type="submit" class="group inline-flex items-center gap-4 rounded-full bg-[#00c46a] py-2 pl-6 pr-2 text-sm font-semibold text-white transition hover:bg-[#00d976]">
                             {{ __('frontend.contact.submit') }}
                             <span class="grid h-9 w-9 place-items-center rounded-full bg-white text-emerald-800">
                                 <svg class="h-4 w-4 -rotate-45 transition-transform duration-300 group-hover:rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-6-6 6 6-6 6"/></svg>

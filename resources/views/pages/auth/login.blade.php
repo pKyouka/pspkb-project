@@ -129,13 +129,13 @@
 
                         <label class="group flex w-fit cursor-pointer items-center gap-3 text-sm font-medium text-slate-600">
                             <span class="relative grid h-5 w-5 shrink-0 place-items-center">
-                                <input name="remember" type="checkbox" value="1" {{ old('remember') ? 'checked' : '' }} class="peer absolute inset-0 h-full w-full cursor-pointer appearance-none rounded-md border border-slate-300 bg-white transition checked:border-emerald-700 checked:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-100">
+                                <input name="remember" type="checkbox" value="1" {{ old('remember') ? 'checked' : '' }} class="peer absolute inset-0 h-full w-full cursor-pointer appearance-none rounded-md border border-slate-300 bg-white transition checked:border-[#00c46a] checked:bg-[#00c46a] focus:outline-none focus:ring-4 focus:ring-emerald-100">
                                 <svg class="pointer-events-none relative h-3.5 w-3.5 scale-75 text-white opacity-0 transition peer-checked:scale-100 peer-checked:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m5 12 4 4L19 6"/></svg>
                             </span>
                             <span class="transition group-hover:text-slate-900">Ingat saya di perangkat ini</span>
                         </label>
 
-                        <button type="submit" data-test="login-button" class="group flex w-full items-center justify-between rounded-xl bg-emerald-700 px-5 py-3.5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(4,120,87,.22)] transition hover:bg-emerald-800 focus:outline-none focus:ring-4 focus:ring-emerald-200">
+                        <button type="submit" data-test="login-button" class="group flex w-full items-center justify-between rounded-xl bg-[#00c46a] px-5 py-3.5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(0,168,89,.24)] transition hover:bg-[#00d976] focus:outline-none focus:ring-4 focus:ring-emerald-200">
                             <span>Masuk ke dashboard</span>
                             <span class="grid h-7 w-7 place-items-center rounded-full bg-white/15 transition group-hover:translate-x-0.5">
                                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5 12h14m-6-6 6 6-6 6"/></svg>

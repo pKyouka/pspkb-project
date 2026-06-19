@@ -38,7 +38,7 @@
             @else
                 <div class="mb-16 grid overflow-hidden rounded-2xl bg-[#dce9e2] lg:mb-24 lg:grid-cols-[1fr_42%]">
                     <div class="flex min-h-72 flex-col justify-between p-8 sm:p-10">
-                        <span class="grid h-12 w-12 place-items-center rounded-full bg-emerald-700 text-white">
+                        <span class="grid h-12 w-12 place-items-center rounded-full bg-[#00c46a] text-white">
                             <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 3 2.5 8 12 13l9.5-5L12 3Zm-6 7.1V16l6 3 6-3v-5.9M21.5 8v6"/></svg>
                         </span>
                         <p class="mt-12 max-w-2xl text-2xl font-medium leading-tight tracking-tight text-slate-950 sm:text-4xl">{{ __('frontend.page.equal_access') }}</p>

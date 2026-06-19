@@ -7,6 +7,45 @@
     <meta name="description" content="@yield('description', $settings['website_description'] ?? '')">
     @include('partials.favicon', ['settings' => $settings ?? []])
     @yield('seo')
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        const unisaGreen = {
+            50: '#ecfff5',
+            100: '#d8ffeb',
+            200: '#aefad2',
+            300: '#72f0b3',
+            400: '#34d985',
+            500: '#00c46a',
+            600: '#00b964',
+            700: '#00a859',
+            800: '#00a859',
+            900: '#009f55',
+            950: '#009750',
+        };
+
+        window.tailwind = window.tailwind || {};
+        window.tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: unisaGreen,
+                        green: unisaGreen,
+                        blue: unisaGreen,
+                        indigo: unisaGreen,
+                        sky: unisaGreen,
+                        cyan: unisaGreen,
+                        purple: unisaGreen,
+                        violet: unisaGreen,
+                    },
+                    fontFamily: {
+                        sans: ['Roboto', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                    },
+                },
+            },
+        };
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])

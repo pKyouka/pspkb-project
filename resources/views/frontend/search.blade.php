@@ -15,7 +15,7 @@
     <form action="{{ route('search') }}" method="GET" class="mb-8 overflow-hidden rounded-[2rem] bg-white p-3 shadow-sm ring-1 ring-slate-200">
         <div class="flex flex-col gap-3 sm:flex-row">
             <input type="text" name="q" value="{{ $query }}" placeholder="{{ __('frontend.search.placeholder') }}" class="min-w-0 flex-1 rounded-2xl border border-slate-200 px-5 py-4 text-base outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100">
-            <button type="submit" class="rounded-2xl bg-emerald-600 px-7 py-4 text-sm font-black text-white transition hover:bg-emerald-700">{{ __('frontend.search.button') }}</button>
+            <button type="submit" class="rounded-2xl bg-[#00c46a] px-7 py-4 text-sm font-black text-white transition hover:bg-[#00d976]">{{ __('frontend.search.button') }}</button>
         </div>
     </form>
 

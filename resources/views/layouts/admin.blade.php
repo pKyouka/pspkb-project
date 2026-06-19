@@ -6,13 +6,52 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Admin') - {{ config('app.name', 'PSPKB CMS') }}</title>
     @include('partials.favicon')
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        const unisaGreen = {
+            50: '#ecfff5',
+            100: '#d8ffeb',
+            200: '#aefad2',
+            300: '#72f0b3',
+            400: '#34d985',
+            500: '#00c46a',
+            600: '#00b964',
+            700: '#00a859',
+            800: '#00a859',
+            900: '#009f55',
+            950: '#009750',
+        };
+
+        window.tailwind = window.tailwind || {};
+        window.tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: unisaGreen,
+                        green: unisaGreen,
+                        blue: unisaGreen,
+                        indigo: unisaGreen,
+                        sky: unisaGreen,
+                        cyan: unisaGreen,
+                        purple: unisaGreen,
+                        violet: unisaGreen,
+                    },
+                    fontFamily: {
+                        sans: ['Roboto', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                    },
+                },
+            },
+        };
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         :root {
-            --admin-emerald: #047857;
-            --admin-emerald-dark: #065f46;
+            --admin-emerald: #00a859;
+            --admin-emerald-dark: #00a859;
             --admin-ink: #0f172a;
             --admin-line: #dce5df;
         }
@@ -21,19 +60,19 @@
 
         body {
             background:
-                radial-gradient(circle at top left, rgba(16, 185, 129, .13), transparent 32rem),
+                radial-gradient(circle at top left, rgba(0, 168, 89, .13), transparent 32rem),
                 radial-gradient(circle at top right, rgba(148, 210, 190, .20), transparent 30rem),
                 #f1f3ef;
         }
 
         .admin-shell {
             color: var(--admin-ink);
-            font-family: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-family: "Roboto", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         }
 
         .admin-sidebar {
             background:
-                radial-gradient(circle at 25% 0%, rgba(52, 211, 153, .20), transparent 18rem),
+                radial-gradient(circle at 25% 0%, rgba(52, 217, 133, .20), transparent 18rem),
                 linear-gradient(165deg, #16251f 0%, #0f172a 72%);
             box-shadow: 0 24px 65px rgba(15, 23, 42, .20);
             display: flex;
@@ -68,7 +107,7 @@
         }
 
         .admin-sidebar-scroll::-webkit-scrollbar-thumb:hover {
-            background: rgba(52, 211, 153, .72);
+            background: rgba(52, 217, 133, .72);
         }
 
         .admin-sidebar-scroll::-webkit-scrollbar-button,
@@ -103,8 +142,8 @@
 
         .admin-nav-link.is-active {
             color: #fff;
-            background: linear-gradient(135deg, #059669, #047857);
-            box-shadow: 0 12px 28px rgba(4, 120, 87, .30);
+            background: linear-gradient(135deg, #00c46a, #00a859);
+            box-shadow: 0 12px 28px rgba(0, 168, 89, .28);
         }
 
         .admin-nav-link svg {
@@ -149,8 +188,8 @@
         main select:focus,
         main textarea:focus {
             outline: none !important;
-            border-color: #10b981 !important;
-            box-shadow: 0 0 0 4px rgba(16, 185, 129, .13) !important;
+            border-color: #00a859 !important;
+            box-shadow: 0 0 0 4px rgba(0, 168, 89, .13) !important;
         }
 
         main label {
@@ -200,7 +239,7 @@
         main a[href*="/create"],
         main button[type="submit"] {
             border-radius: .9rem !important;
-            box-shadow: 0 10px 24px rgba(4, 120, 87, .18);
+            box-shadow: 0 10px 24px rgba(0, 168, 89, .20);
         }
 
         .admin-topbar {
@@ -225,7 +264,7 @@
         .admin-main .bg-blue-100,
         .admin-main .bg-indigo-50,
         .admin-main .bg-sky-50,
-        .admin-main .bg-cyan-50 { background-color: #ecfdf5 !important; }
+        .admin-main .bg-cyan-50 { background-color: #ecfff5 !important; }
 
         .admin-main .text-blue-600,
         .admin-main .text-blue-700,
@@ -240,10 +279,10 @@
         .admin-main .border-blue-300,
         .admin-main .border-indigo-100,
         .admin-main .border-indigo-200,
-        .admin-main .border-sky-200 { border-color: #a7f3d0 !important; }
+        .admin-main .border-sky-200 { border-color: #aefad2 !important; }
 
         .admin-main .focus\:ring-blue-500:focus,
-        .admin-main .focus\:ring-indigo-500:focus { --tw-ring-color: rgba(16, 185, 129, .35) !important; }
+        .admin-main .focus\:ring-indigo-500:focus { --tw-ring-color: rgba(0, 168, 89, .35) !important; }
     </style>
 </head>
 <body class="admin-shell min-h-screen" x-data="{ sidebarOpen: false }">
@@ -379,7 +418,7 @@
 
                         <div class="relative" x-data="{ open: false }">
                             <button @click="open = !open" class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white py-1.5 pl-2 pr-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:shadow-md sm:gap-3 sm:pr-3">
-                                <span class="grid h-8 w-8 place-items-center rounded-full bg-emerald-700 text-xs font-black text-white">
+                                <span class="grid h-8 w-8 place-items-center rounded-full bg-[#00c46a] text-xs font-black text-white">
                                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                                 </span>
                                 <span class="hidden sm:inline">{{ auth()->user()->name }}</span>

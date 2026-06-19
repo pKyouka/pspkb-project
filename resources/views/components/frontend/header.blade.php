@@ -47,7 +47,7 @@
 
         <nav class="hidden items-center gap-1 md:flex">
             @foreach($navigation as $item)
-                <a href="{{ $item['url'] }}" class="rounded-full px-3.5 py-2 text-[13px] font-medium transition-colors duration-300 {{ $isActive($item['url']) ? 'bg-emerald-700 text-white' : 'text-slate-800 hover:bg-emerald-50 hover:text-emerald-700' }}">
+                <a href="{{ $item['url'] }}" class="rounded-full px-3.5 py-2 text-[13px] font-medium transition-colors duration-300 {{ $isActive($item['url']) ? 'bg-[#00c46a] text-white' : 'text-slate-800 hover:bg-emerald-50 hover:text-[#00a859]' }}">
                     {{ $item['title'] }}
                 </a>
             @endforeach
@@ -121,7 +121,7 @@
                 </a>
             @endforeach
         </nav>
-        <a href="{{ route('home') }}" class="mt-7 flex items-center justify-between rounded-full bg-emerald-700 py-2 pl-5 pr-2 text-sm font-semibold text-white">
+        <a href="{{ route('home') }}" class="mt-7 flex items-center justify-between rounded-full bg-[#00c46a] py-2 pl-5 pr-2 text-sm font-semibold text-white">
             {{ __('frontend.nav.back_home') }}
             <span class="grid h-9 w-9 place-items-center rounded-full bg-white text-emerald-800">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 18-6-6 6-6"/></svg>

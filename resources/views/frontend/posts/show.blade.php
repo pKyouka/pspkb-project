@@ -90,7 +90,7 @@
                         </a>
                         <a href="{{ route('contact') }}" class="group inline-flex items-center gap-3 text-sm font-semibold text-emerald-700">
                             {{ __('frontend.common.contact_uld') }}
-                            <span class="grid h-9 w-9 place-items-center rounded-full bg-emerald-700 text-white">
+                            <span class="grid h-9 w-9 place-items-center rounded-full bg-[#00c46a] text-white">
                                 <svg class="h-4 w-4 -rotate-45 transition-transform duration-300 group-hover:rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M5 12h14m-6-6 6 6-6 6"/></svg>
                             </span>
                         </a>

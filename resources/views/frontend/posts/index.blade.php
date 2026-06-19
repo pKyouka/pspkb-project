@@ -61,7 +61,7 @@
                 </a>
             @empty
                 <div class="col-span-full rounded-2xl border border-slate-200 bg-[#f7f8f5] p-12 text-center">
-                    <span class="mx-auto grid h-12 w-12 place-items-center rounded-full bg-emerald-700 text-white">
+                    <span class="mx-auto grid h-12 w-12 place-items-center rounded-full bg-[#00c46a] text-white">
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M4 6h16M4 12h16M4 18h10"/></svg>
                     </span>
                     <p class="mt-5 text-lg font-medium text-slate-900">{{ $emptyMessage }}</p>
@@ -82,7 +82,7 @@
             <p class="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700">{{ __('frontend.common.stay_connected') }}</p>
             <h2 class="mt-3 max-w-3xl text-3xl font-medium leading-tight tracking-[-0.035em] text-slate-950 sm:text-5xl">{{ __('frontend.common.access_information') }}</h2>
         </div>
-        <a href="{{ route('contact') }}" class="group inline-flex items-center gap-4 rounded-full bg-emerald-700 py-2 pl-6 pr-2 text-sm font-semibold text-white">
+        <a href="{{ route('contact') }}" class="group inline-flex items-center gap-4 rounded-full bg-[#00c46a] py-2 pl-6 pr-2 text-sm font-semibold text-white">
             {{ __('frontend.common.contact_uld') }}
             <span class="grid h-9 w-9 place-items-center rounded-full bg-white text-emerald-800">
                 <svg class="h-4 w-4 -rotate-45 transition-transform duration-500 group-hover:rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-6-6 6 6-6 6"/></svg>

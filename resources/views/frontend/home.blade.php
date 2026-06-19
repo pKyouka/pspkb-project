@@ -126,9 +126,9 @@
             </p>
 
             <div class="mt-8 flex flex-col items-start gap-4 sm:mt-10 sm:flex-row sm:items-center">
-                <a href="#layanan" class="group inline-flex items-center gap-4 rounded-full bg-emerald-700 py-2 pl-6 pr-2 text-[13px] font-semibold text-white shadow-lg transition duration-500 hover:bg-emerald-800">
+                <a href="#layanan" class="group inline-flex items-center gap-4 rounded-full bg-[#00c46a] py-2 pl-6 pr-2 text-[13px] font-semibold text-white shadow-lg shadow-[#00a859]/25 transition duration-500 hover:bg-[#00d976]">
                     Jelajahi layanan
-                    <span class="grid h-8 w-8 place-items-center rounded-full bg-white text-emerald-800">
+                    <span class="grid h-8 w-8 place-items-center rounded-full bg-white text-[#00a859]">
                         <svg class="h-4 w-4 -rotate-45 transition-transform duration-500 group-hover:rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-6-6 6 6-6 6"/></svg>
                     </span>
                 </a>
@@ -149,7 +149,7 @@
                 </button>
                 <div class="flex gap-2">
                     @foreach($banners as $index => $banner)
-                        <button type="button" x-on:click="active = {{ $index }}; start()" class="h-2 rounded-full transition-all duration-300" :class="active === {{ $index }} ? 'w-8 bg-emerald-700' : 'w-2 bg-slate-500/50'" aria-label="Tampilkan banner {{ $index + 1 }}"></button>
+                        <button type="button" x-on:click="active = {{ $index }}; start()" class="h-2 rounded-full transition-all duration-300" :class="active === {{ $index }} ? 'w-8 bg-[#00c46a]' : 'w-2 bg-slate-500/50'" aria-label="Tampilkan banner {{ $index + 1 }}"></button>
                     @endforeach
                 </div>
                 <button type="button" x-on:click="next(); start()" class="grid h-11 w-11 place-items-center rounded-full border border-white/60 bg-white/85 text-slate-900 shadow-sm backdrop-blur transition hover:bg-white" aria-label="Banner berikutnya">
@@ -216,7 +216,7 @@
 
             <div class="mt-8 grid gap-3 md:grid-cols-2 lg:mt-10 lg:grid-cols-6">
                 @foreach($strategicRoles as $index => $role)
-                    <article class="pspkb-strategic-card group relative overflow-hidden rounded-xl border border-slate-200 bg-[#f7f8f5] p-5 transition duration-500 hover:-translate-y-1 hover:border-emerald-600 hover:bg-emerald-800 hover:text-white hover:shadow-[0_18px_40px_rgba(6,78,59,.16)] {{ $index < 2 ? 'lg:col-span-3' : 'lg:col-span-2' }}">
+                    <article class="pspkb-strategic-card group relative overflow-hidden rounded-xl border border-slate-200 bg-[#f7f8f5] p-5 transition duration-500 hover:-translate-y-1 hover:border-[#00c46a] hover:bg-[#00c46a] hover:text-white hover:shadow-[0_18px_40px_rgba(0,168,89,.18)] {{ $index < 2 ? 'lg:col-span-3' : 'lg:col-span-2' }}">
                         <div class="relative z-10 flex min-h-44 flex-col">
                             <div class="flex items-start justify-between gap-5">
                                 <span class="grid h-10 w-10 place-items-center rounded-full bg-white text-emerald-700 shadow-sm ring-1 ring-slate-200 transition duration-500 group-hover:rotate-6 group-hover:ring-white/20">
@@ -301,7 +301,7 @@
 
         <div class="mt-12 grid gap-px overflow-hidden rounded-2xl bg-slate-200 sm:grid-cols-2 lg:mt-16 lg:grid-cols-5">
             @foreach($values as $index => $value)
-                <article class="group min-h-64 bg-[#f7f8f5] p-7 transition duration-500 hover:bg-emerald-800 hover:text-white">
+                <article class="group min-h-64 bg-[#f7f8f5] p-7 transition duration-500 hover:bg-[#00c46a] hover:text-white">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-medium text-slate-400 transition group-hover:text-emerald-200">0{{ $index + 1 }}</span>
                         <span class="h-2.5 w-2.5 rounded-full bg-emerald-600 transition group-hover:bg-white"></span>
