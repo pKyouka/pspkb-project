@@ -99,8 +99,8 @@
             :aria-hidden="active !== {{ $index }}"
         >
             <img src="{{ $banner->image_url }}" alt="" class="h-full w-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-r from-white/90 via-white/55 to-slate-950/10"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/25 via-transparent to-white/10"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-white/35 via-white/10 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-white/10 via-transparent to-white/5"></div>
         </div>
     @empty
         <div class="pspkb-hero-glow" aria-hidden="true"></div>
@@ -133,7 +133,7 @@
                     </span>
                 </a>
 
-                <a href="{{ route('contact') }}" class="group inline-flex items-center gap-3 rounded-full bg-white/90 px-4 py-3 text-[13px] font-semibold text-slate-900 shadow-[0_2px_12px_rgba(15,23,42,.18)] backdrop-blur transition hover:bg-white">
+                <a href="{{ route('contact') }}" class="group inline-flex items-center gap-3 rounded-full bg-white px-4 py-3 text-[13px] font-semibold text-slate-900 shadow-[0_14px_35px_rgba(15,23,42,.16)] ring-1 ring-white/80 transition hover:-translate-y-0.5 hover:bg-[#f8fffb]">
                     <span class="grid h-6 w-6 place-items-center rounded-full bg-emerald-50 text-emerald-700">
                         <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16l-4 3v-3a8 8 0 1 1 4 0Z"/></svg>
                     </span>
@@ -144,7 +144,7 @@
 
         @if($banners->count() > 1)
             <div class="mt-10 flex items-center gap-3" aria-label="Navigasi banner">
-                <button type="button" x-on:click="previous(); start()" class="grid h-11 w-11 place-items-center rounded-full border border-white/60 bg-white/85 text-slate-900 shadow-sm backdrop-blur transition hover:bg-white" aria-label="Banner sebelumnya">
+                <button type="button" x-on:click="previous(); start()" class="grid h-11 w-11 place-items-center rounded-full border border-white bg-white text-slate-900 shadow-[0_10px_25px_rgba(15,23,42,.14)] transition hover:bg-[#f8fffb]" aria-label="Banner sebelumnya">
                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="m15 18-6-6 6-6"/></svg>
                 </button>
                 <div class="flex gap-2">
@@ -152,14 +152,14 @@
                         <button type="button" x-on:click="active = {{ $index }}; start()" class="h-2 rounded-full transition-all duration-300" :class="active === {{ $index }} ? 'w-8 bg-[#00c46a]' : 'w-2 bg-slate-500/50'" aria-label="Tampilkan banner {{ $index + 1 }}"></button>
                     @endforeach
                 </div>
-                <button type="button" x-on:click="next(); start()" class="grid h-11 w-11 place-items-center rounded-full border border-white/60 bg-white/85 text-slate-900 shadow-sm backdrop-blur transition hover:bg-white" aria-label="Banner berikutnya">
+                <button type="button" x-on:click="next(); start()" class="grid h-11 w-11 place-items-center rounded-full border border-white bg-white text-slate-900 shadow-[0_10px_25px_rgba(15,23,42,.14)] transition hover:bg-[#f8fffb]" aria-label="Banner berikutnya">
                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="m9 18 6-6-6-6"/></svg>
                 </button>
             </div>
         @endif
 
         <div class="mt-12 flex items-center gap-3 text-xs font-medium text-slate-500 sm:absolute sm:bottom-8 sm:right-8 sm:mt-0 lg:right-12">
-            <span class="grid h-8 w-8 place-items-center rounded-full border border-slate-300 bg-white/60">
+            <span class="grid h-8 w-8 place-items-center rounded-full border border-white bg-white shadow-[0_8px_18px_rgba(15,23,42,.12)]">
                 <svg class="h-4 w-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="m6 9 6 6 6-6"/></svg>
             </span>
             Kenali Unit Layanan Disabilitas lebih dekat

@@ -9,7 +9,7 @@
 
 <a
     href="{{ $url }}"
-    class="group fixed bottom-5 right-5 z-40 flex max-w-[calc(100vw-2.5rem)] items-center gap-3 rounded-full border border-white/70 bg-white/95 p-2 pr-4 text-slate-950 shadow-[0_18px_50px_rgba(15,23,42,.18)] backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-[0_24px_60px_rgba(0,168,89,.24)] focus:outline-none focus:ring-4 focus:ring-emerald-100 sm:bottom-7 sm:right-7 sm:pr-5"
+    class="group fixed bottom-5 right-5 z-40 flex max-w-[calc(100vw-2.5rem)] items-center gap-3 rounded-full border border-white bg-white p-2 pr-4 text-slate-950 shadow-[0_18px_50px_rgba(15,23,42,.16)] ring-1 ring-emerald-100 transition duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:bg-[#f8fffb] hover:shadow-[0_24px_60px_rgba(0,168,89,.22)] focus:outline-none focus:ring-4 focus:ring-emerald-100 sm:bottom-7 sm:right-7 sm:pr-5"
     aria-label="Daftar PMB Universitas Aisyiyah Yogyakarta"
 >
     <span class="relative grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-full bg-white p-1.5 text-white shadow-lg shadow-emerald-500/20 ring-1 ring-emerald-200 transition duration-300 group-hover:scale-105 sm:h-14 sm:w-14">

@@ -67,7 +67,7 @@
         }
     </style>
 </head>
-<body class="bg-[#f1f2ef] text-slate-800 antialiased">
+<body class="bg-[#fbfffc] text-slate-800 antialiased">
     @php
         $siteName = __('frontend.site_name');
         $logo = $settings['logo'] ?? '';

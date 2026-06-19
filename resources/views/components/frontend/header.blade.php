@@ -30,7 +30,7 @@
 @endphp
 
 <header x-data="{ open: false }" class="{{ $headerPosition }} inset-x-0 top-0 z-50 p-2 sm:p-3">
-    <div class="mx-auto flex max-w-[1440px] items-center justify-between rounded-full border border-white/70 bg-white/90 p-[5px] shadow-[0_8px_35px_rgba(15,23,42,.08)] backdrop-blur-xl">
+    <div class="mx-auto flex max-w-[1440px] items-center justify-between rounded-full border border-white bg-white p-[5px] shadow-[0_16px_45px_rgba(15,23,42,.12)] ring-1 ring-emerald-100/70">
         <a href="{{ route('home') }}" class="flex min-w-0 items-center gap-3">
             <span class="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-full bg-slate-950 text-[10px] font-bold text-white">
                 @if($logo)
@@ -54,7 +54,7 @@
         </nav>
 
         <div class="hidden items-center gap-2 md:flex">
-            <div class="google-language-switcher flex h-10 items-center rounded-full border border-slate-200 bg-white/70 p-1 text-[11px] font-bold shadow-sm" aria-label="Language">
+            <div class="google-language-switcher flex h-10 items-center rounded-full border border-emerald-100 bg-white p-1 text-[11px] font-bold shadow-[0_8px_20px_rgba(15,23,42,.08)]" aria-label="Language">
                 <button type="button" data-google-lang="id" onclick="window.setGoogleLanguage('id')" class="google-lang-button grid h-8 min-w-8 place-items-center rounded-full bg-slate-950 px-2 text-white transition">ID</button>
                 <button type="button" data-google-lang="en" onclick="window.setGoogleLanguage('en')" class="google-lang-button grid h-8 min-w-8 place-items-center rounded-full px-2 text-slate-500 transition hover:text-emerald-700">EN</button>
             </div>
