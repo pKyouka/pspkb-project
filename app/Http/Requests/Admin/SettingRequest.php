@@ -18,7 +18,7 @@ class SettingRequest extends FormRequest
             'website_description' => 'nullable|string|max:1000',
             'logo' => 'nullable|image|max:2048',
             'remove_logo' => 'nullable|boolean',
-            'favicon' => 'nullable|image|max:1024',
+            'favicon' => 'nullable|mimes:ico,png,jpg,jpeg,webp,svg|max:1024',
             'remove_favicon' => 'nullable|boolean',
             'contact_email' => 'nullable|email|max:255',
             'contact_phone' => 'nullable|string|max:50',

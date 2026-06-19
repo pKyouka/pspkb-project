@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', __('frontend.site_name').' | '.__('frontend.university'))</title>
     <meta name="description" content="@yield('description', $settings['website_description'] ?? '')">
+    @include('partials.favicon', ['settings' => $settings ?? []])
     @yield('seo')
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
