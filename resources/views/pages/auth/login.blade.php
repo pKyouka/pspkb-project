@@ -4,6 +4,14 @@
     @include('partials.head', ['title' => 'Masuk Admin Unit Layanan Disabilitas'])
 </head>
 <body class="min-h-screen bg-[#edf2ee] text-slate-900 antialiased">
+    @php
+        $loginWebsiteName = \App\Models\Setting::getValue('website_name', 'Unit Layanan Disabilitas') ?: 'Unit Layanan Disabilitas';
+        $loginLogo = trim((string) \App\Models\Setting::getValue('logo', ''));
+        $loginLogoUrl = $loginLogo !== '' && \Illuminate\Support\Facades\Storage::disk('public')->exists($loginLogo)
+            ? asset('storage/' . $loginLogo)
+            : null;
+    @endphp
+
     <main class="relative min-h-screen overflow-hidden p-4 sm:p-6 lg:p-8">
         <div class="pointer-events-none absolute inset-0">
             <div class="absolute -left-24 -top-28 h-80 w-80 rounded-full bg-emerald-300/25 blur-3xl"></div>
@@ -16,11 +24,15 @@
                 <div class="absolute inset-0 bg-gradient-to-br from-emerald-950/30 via-transparent to-slate-950/60"></div>
 
                 <a href="{{ route('home') }}" class="relative z-10 flex w-fit items-center gap-3">
-                    <span class="grid h-12 w-12 place-items-center rounded-2xl bg-white text-emerald-800 shadow-lg">
-                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2" stroke-width="1.8"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 7.5v6m0 0 4 5m-4-5-4 5m-3-7h14"/></svg>
+                    <span class="grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-2xl bg-white text-emerald-800 shadow-lg">
+                        @if($loginLogoUrl)
+                            <img src="{{ $loginLogoUrl }}" alt="{{ $loginWebsiteName }}" class="h-full w-full object-contain p-1.5">
+                        @else
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2" stroke-width="1.8"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 7.5v6m0 0 4 5m-4-5-4 5m-3-7h14"/></svg>
+                        @endif
                     </span>
                     <span>
-                        <span class="block text-lg font-semibold">Unit Layanan Disabilitas</span>
+                        <span class="block text-lg font-semibold">{{ $loginWebsiteName }}</span>
                         <span class="mt-0.5 block text-[10px] font-semibold uppercase tracking-[0.22em] text-emerald-300">Universitas 'Aisyiyah Yogyakarta</span>
                     </span>
                 </a>
@@ -45,11 +57,15 @@
                 <div class="w-full max-w-md">
                     <div class="mb-10 flex items-center justify-between lg:hidden">
                         <a href="{{ route('home') }}" class="flex items-center gap-3">
-                            <span class="grid h-11 w-11 place-items-center rounded-xl bg-emerald-800 text-white">
-                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2" stroke-width="1.8"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 7.5v6m0 0 4 5m-4-5-4 5m-3-7h14"/></svg>
+                            <span class="grid h-11 w-11 shrink-0 place-items-center overflow-hidden rounded-xl bg-white text-emerald-800 shadow-sm ring-1 ring-emerald-100">
+                                @if($loginLogoUrl)
+                                    <img src="{{ $loginLogoUrl }}" alt="{{ $loginWebsiteName }}" class="h-full w-full object-contain p-1.5">
+                                @else
+                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2" stroke-width="1.8"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 7.5v6m0 0 4 5m-4-5-4 5m-3-7h14"/></svg>
+                                @endif
                             </span>
                             <span>
-                                <span class="block text-sm font-semibold">Unit Layanan Disabilitas</span>
+                                <span class="block text-sm font-semibold">{{ $loginWebsiteName }}</span>
                                 <span class="block text-[9px] font-semibold uppercase tracking-[0.18em] text-emerald-700">Universitas 'Aisyiyah Yogyakarta</span>
                             </span>
                         </a>

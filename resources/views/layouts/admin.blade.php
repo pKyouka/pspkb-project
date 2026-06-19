@@ -247,6 +247,14 @@
     </style>
 </head>
 <body class="admin-shell min-h-screen" x-data="{ sidebarOpen: false }">
+    @php
+        $adminWebsiteName = \App\Models\Setting::getValue('website_name', 'Unit Layanan Disabilitas') ?: 'Unit Layanan Disabilitas';
+        $adminLogo = trim((string) \App\Models\Setting::getValue('logo', ''));
+        $adminLogoUrl = $adminLogo !== '' && \Illuminate\Support\Facades\Storage::disk('public')->exists($adminLogo)
+            ? asset('storage/' . $adminLogo)
+            : null;
+    @endphp
+
     <div class="min-h-screen flex">
         <div x-cloak x-show="sidebarOpen" x-transition.opacity class="fixed inset-0 z-40 bg-slate-950/45 backdrop-blur-sm lg:hidden" @click="sidebarOpen = false"></div>
 
@@ -256,11 +264,15 @@
         >
             <div class="flex-none px-5 pb-4 pt-5">
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3">
-                    <div class="grid h-12 w-12 place-items-center rounded-2xl bg-emerald-500 shadow-lg shadow-emerald-950/30">
-                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2" stroke-width="1.8"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 7.5v6m0 0 4 5m-4-5-4 5m-3-7h14"/></svg>
+                    <div class="grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-2xl bg-white text-emerald-800 shadow-lg shadow-emerald-950/30">
+                        @if($adminLogoUrl)
+                            <img src="{{ $adminLogoUrl }}" alt="{{ $adminWebsiteName }}" class="h-full w-full object-contain p-1.5">
+                        @else
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2" stroke-width="1.8"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 7.5v6m0 0 4 5m-4-5-4 5m-3-7h14"/></svg>
+                        @endif
                     </div>
-                    <div>
-                        <h1 class="max-w-36 text-sm font-black leading-tight tracking-tight">Admin Unit Layanan Disabilitas</h1>
+                    <div class="min-w-0">
+                        <h1 class="max-w-36 text-sm font-black leading-tight tracking-tight">Admin {{ $adminWebsiteName }}</h1>
                         <p class="mt-0.5 text-[10px] font-semibold uppercase tracking-[.14em] text-emerald-300">Universitas 'Aisyiyah</p>
                     </div>
                 </a>
